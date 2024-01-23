@@ -29,7 +29,12 @@ public class Eventos {
     @NotBlank
     private Usuario usuario_crador;
     @ManyToMany
-    @JoinColumn(name = "id_asistente")
+    @JoinTable(
+            name = "evento_asistente",
+            joinColumns = @JoinColumn(name = "id_evento"),
+            inverseJoinColumns = @JoinColumn(name = "id_asistente")
+    )
+
     private Set<Asistente> asistentes = new HashSet<Asistente>();
     private Date fecha_creacion = new Date();
     private Date fecha_evento = new Date();

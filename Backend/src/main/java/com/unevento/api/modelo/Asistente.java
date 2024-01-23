@@ -19,15 +19,17 @@ public class Asistente {
     private Long id_asistente;
 
 
-    @OneToMany(mappedBy = "asistente")
+    @ManyToMany(mappedBy = "asistentes")
     private Set<Eventos> eventos = new HashSet<Eventos>();
 
-    @OneToOne(mappedBy = "usuario")
+    @ManyToOne
+    @JoinColumn(name = "id_usuario")  // Ajustar aquí
     private Usuario usuario;
 
     private Date fecha_registro = new Date();
 
-    @OneToOne(mappedBy = "boleto")
+    @ManyToOne
+    @JoinColumn(name = "boleto")  // Assuming there's a foreign key column named 'boleto_id'
     private Boleto boleto;
 
     public Asistente() {
