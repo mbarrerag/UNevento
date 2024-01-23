@@ -1,15 +1,13 @@
 package com.unevento.api.modelo;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "usuario")
@@ -34,6 +32,11 @@ public class Usuario {
     @NotBlank
     private Date fecha_registro;
 
+    @OneToMany(mappedBy = "usuario_creador")
+    private List<Eventos> eventos;
+
+    @OneToMany(mappedBy = "usuario")
+    private List<Asistente> asistentes;
     public Usuario() {
 
     }

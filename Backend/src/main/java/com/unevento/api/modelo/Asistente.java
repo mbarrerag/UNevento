@@ -29,7 +29,7 @@ public class Asistente {
     private Date fecha_registro = new Date();
 
     @ManyToOne
-    @JoinColumn(name = "boleto")  // Assuming there's a foreign key column named 'boleto_id'
+    @JoinColumn(name = "id_boleto")  // Assuming there's a foreign key column named 'boleto_id'
     private Boleto boleto;
 
     public Asistente() {

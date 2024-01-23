@@ -19,9 +19,6 @@ public class Boleto {
     @Id
     private Long id_boleto;
 
-    @OneToMany(mappedBy = "evento")
-    private Set<Eventos> eventos = new HashSet<Eventos>();
-
     @OneToMany(mappedBy = "boleto")
     private Set<Asistente> asistentes = new HashSet<Asistente>();
 

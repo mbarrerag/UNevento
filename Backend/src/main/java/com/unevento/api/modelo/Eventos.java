@@ -27,7 +27,8 @@ public class Eventos {
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     @NotBlank
-    private Usuario usuario_crador;
+    private Usuario usuario_creador;
+
     @ManyToMany
     @JoinTable(
             name = "evento_asistente",
