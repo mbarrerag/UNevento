@@ -21,6 +21,9 @@ public class Eventos {
     private String descripcion;
     @NotBlank
     private String lugar;
+
+    @Enumerated(EnumType.STRING)
+    private Categorias categoria = Categorias.Conferencia;
     @Enumerated(EnumType.STRING)
     private Facultades status = Facultades.Facultad_De_Ingenieria;
 
@@ -28,7 +31,6 @@ public class Eventos {
     @JoinColumn(name = "id_usuario")
     @NotBlank
     private Usuario usuario_creador;
-
     @ManyToMany
     @JoinTable(
             name = "evento_asistente",
