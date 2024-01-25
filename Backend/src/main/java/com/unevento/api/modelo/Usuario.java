@@ -1,17 +1,14 @@
 package com.unevento.api.modelo;
 
 
-import com.unevento.api.records.NewUserRecord;
+import com.unevento.api.records.NewUser;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -48,7 +45,7 @@ public class Usuario {
 
     }
 
-    public Usuario(NewUserRecord dataUser) {
+    public Usuario(NewUser dataUser) {
         this.nombre = dataUser.nombre();
         this.apellido = dataUser.apellido();
         this.correo = dataUser.email();

@@ -1,7 +1,9 @@
 package com.unevento.api.modelo;
 
+import com.unevento.api.controllers.NewEvent;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+
 
 import java.util.Date;
 import java.util.HashSet;
@@ -42,6 +44,8 @@ public class Eventos {
     private Date fecha_creacion = new Date();
     private Date fecha_evento = new Date();
 
+    public Eventos(NewEvent newEvent) {
+    }
 
 
     public void setId_evento(Long idEvento) {
