@@ -1,8 +1,13 @@
 package com.unevento.api.modelo;
 
-import com.unevento.api.controllers.NewEvent;
+import com.unevento.api.controllers.NewEventController;
+import com.unevento.api.records.NewEvent;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 
 import java.util.Date;
@@ -11,11 +16,14 @@ import java.util.Set;
 
 @Entity
 @Table(name = "evento")
+@Getter
+@Setter
+@AllArgsConstructor
 
 public class Eventos {
 
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_evento;
     @NotBlank
     private String nombre;
@@ -24,14 +32,18 @@ public class Eventos {
     @NotBlank
     private String lugar;
 
+    @NotBlank
+    private String hora;
+    @NotNull
+    @Column(name = "CANTIDAD_MAX_ASISTENTES")
+    private Long capacidad;
     @Enumerated(EnumType.STRING)
-    private Categorias categoria = Categorias.Conferencia;
+    private Categorias categoria;
     @Enumerated(EnumType.STRING)
-    private Facultades status = Facultades.Facultad_De_Ingenieria;
+    private Facultades facultad;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
-    @NotBlank
     private Usuario usuario_creador;
     @ManyToMany
     @JoinTable(
@@ -41,10 +53,28 @@ public class Eventos {
     )
 
     private Set<Asistente> asistentes = new HashSet<Asistente>();
+    @Column(name = "FECHA_REGISTRO")
     private Date fecha_creacion = new Date();
     private Date fecha_evento = new Date();
 
-    public Eventos(NewEvent newEvent) {
+    public  Eventos(NewEvent dataEvent, Usuario user){
+        this.usuario_creador = user;
+        this.nombre = dataEvent.nombre();
+        this.descripcion = dataEvent.descripcion();
+        this.lugar = dataEvent.lugar();
+        this.categoria = Categorias.valueOf(dataEvent.categoria());
+        this.facultad = Facultades.valueOf(dataEvent.Facultad());
+        this.fecha_evento = dataEvent.fechaEvento();
+        this.capacidad = dataEvent.capacidad();
+        this.hora = dataEvent.hora();
+    }
+
+    public Eventos(NewEventController newEventController) {
+
+    }
+
+    public Eventos() {
+
     }
 
 

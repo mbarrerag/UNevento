@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/deletedUser/{id}")
 public class DeletedUser {
+
+
      private final UserRepository userRepository;
 
      public DeletedUser(UserRepository userRepository) {
