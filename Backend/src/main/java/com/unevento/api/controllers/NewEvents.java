@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/newevent")
 
-public class NewEventController {
+public class NewEvents {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
 
-    public NewEventController(EventRepository eventRepository, UserRepository userRepository) {
+    public NewEvents(EventRepository eventRepository, UserRepository userRepository) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
     }

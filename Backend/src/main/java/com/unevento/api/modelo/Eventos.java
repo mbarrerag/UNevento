@@ -1,6 +1,6 @@
 package com.unevento.api.modelo;
 
-import com.unevento.api.controllers.NewEventController;
+import com.unevento.api.controllers.NewEvents;
 import com.unevento.api.records.NewEvent;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -12,6 +12,7 @@ import lombok.Setter;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -47,12 +48,12 @@ public class Eventos {
     private Usuario usuario_creador;
     @ManyToMany
     @JoinTable(
-            name = "evento_asistente",
+            name = "evento",
             joinColumns = @JoinColumn(name = "id_evento"),
             inverseJoinColumns = @JoinColumn(name = "id_asistente")
     )
 
-    private Set<Asistente> asistentes = new HashSet<Asistente>();
+    private List<Asistente> asistentes;
     @Column(name = "FECHA_REGISTRO")
     private Date fecha_creacion = new Date();
     private Date fecha_evento = new Date();
@@ -69,7 +70,7 @@ public class Eventos {
         this.hora = dataEvent.hora();
     }
 
-    public Eventos(NewEventController newEventController) {
+    public Eventos(NewEvents newEvents) {
 
     }
 
