@@ -24,7 +24,6 @@ public class UpdateUser {
     @Transactional
     @PutMapping
     public ResponseEntity<com.unevento.api.records.UpdateUser> updateUser(@RequestBody com.unevento.api.records.UpdateUser dataUser) {
-        System.out.println("update user"+dataUser.id()+dataUser.nombre()+dataUser.apellido()+dataUser.correo()+dataUser.contrasena());
         try {
             Usuario usuario = userRepository.getById(dataUser.id());
             // Actualizar los datos del usuario con los valores proporcionados en dataUser
