@@ -51,12 +51,13 @@ public class Eventos {
             name = "evento",
             joinColumns = @JoinColumn(name = "id_evento"),
             inverseJoinColumns = @JoinColumn(name = "id_asistente")
-    )
 
+    )
     private List<Asistente> asistentes;
     @Column(name = "FECHA_REGISTRO")
     private Date fecha_creacion = new Date();
     private Date fecha_evento = new Date();
+    private int activo = 1;
 
     public  Eventos(NewEvent dataEvent, Usuario user){
         this.usuario_creador = user;
