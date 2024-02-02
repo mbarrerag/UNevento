@@ -1,7 +1,3 @@
-Sure, here's a sample README for your Spring Boot project named "UNevento" which includes endpoints and Spring Security:
-
----
-
 # UNevento
 
 UNevento is a Spring Boot project designed to manage events with the help of Spring Security for authentication and authorization. This application provides endpoints to perform CRUD operations on events and ensures secure access to these endpoints using Spring Security.
