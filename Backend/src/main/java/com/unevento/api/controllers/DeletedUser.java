@@ -27,6 +27,6 @@ public class DeletedUser {
      public ResponseEntity<Usuario> deleteUser(@PathVariable Long id) {
          Usuario user = userRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
          userRepository.delete(user);
-         return ResponseEntity.ok().build();
+         return ResponseEntity.noContent().build();
      }
 }

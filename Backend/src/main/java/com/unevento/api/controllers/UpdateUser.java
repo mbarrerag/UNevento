@@ -1,6 +1,7 @@
 package com.unevento.api.controllers;
 
 import com.unevento.api.modelo.Usuario;
+import com.unevento.api.records.UpdateAnswerDataUser;
 import com.unevento.api.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -23,7 +24,7 @@ public class UpdateUser {
 
     @Transactional
     @PutMapping
-    public ResponseEntity<com.unevento.api.records.UpdateUser> updateUser(@RequestBody com.unevento.api.records.UpdateUser dataUser) {
+    public ResponseEntity<UpdateAnswerDataUser> updateUser(@RequestBody com.unevento.api.records.UpdateUser dataUser) {
         try {
             Usuario usuario = userRepository.getById(dataUser.id());
             // Actualizar los datos del usuario con los valores proporcionados en dataUser
@@ -35,7 +36,7 @@ public class UpdateUser {
             // Guardar la entidad actualizada en la base de datos
             userRepository.save(usuario);
 
-            return ResponseEntity.ok(new com.unevento.api.records.UpdateUser(usuario.getId(), usuario.getNombre(), usuario.getApellido(), usuario.getCorreo(), usuario.getPassword()));
+            return ResponseEntity.ok(new UpdateAnswerDataUser(usuario.getId(), usuario.getNombre(), usuario.getApellido(), usuario.getCorreo(), usuario.getPassword()));
         } catch (EntityNotFoundException ex) {
             return ResponseEntity.notFound().build();
         }

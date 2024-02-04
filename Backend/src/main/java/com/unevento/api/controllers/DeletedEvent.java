@@ -22,6 +22,6 @@ public class DeletedEvent {
     public ResponseEntity<Object> deleteEvent(@PathVariable Long id) {
         Eventos event = eventRepository.getById(id);
         eventRepository.delete(event);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 }

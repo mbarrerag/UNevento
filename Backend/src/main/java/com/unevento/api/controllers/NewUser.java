@@ -1,8 +1,13 @@
 package com.unevento.api.controllers;
 
 import com.unevento.api.modelo.Usuario;
+import com.unevento.api.records.UpdateAnswerDataUser;
 import com.unevento.api.repository.UserRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 
 @RestController
 @RequestMapping("/newuser")
@@ -17,10 +22,15 @@ public class NewUser {
     }
 
     @PostMapping
-    public void newUser(@RequestBody com.unevento.api.records.NewUser dataUser) {
-        userRepository.save(new Usuario(dataUser));
+    public ResponseEntity<UpdateAnswerDataUser> newUser(@RequestBody com.unevento.api.records.NewUser dataUser, UriComponentsBuilder uriBuilder) {
+      Usuario user = userRepository.save(new Usuario(dataUser));
+      UpdateAnswerDataUser answer = new UpdateAnswerDataUser(user.getId(), user.getNombre(), user.getApellido(), user.getCorreo(), user.getPassword());
+        URI uri = uriBuilder.path("/getuser/{id}").buildAndExpand(user.getId()).toUri();
+      return ResponseEntity.created(uri).body(answer);
     }
-}
+
+   }
+
 
 
 
