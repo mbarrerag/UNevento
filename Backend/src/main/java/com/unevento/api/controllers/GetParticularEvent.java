@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.awt.*;
 
 @RestController
-@RequestMapping("/getparticularevent")
+@RequestMapping("/getevent")
 public class GetParticularEvent {
 
 
