@@ -1,8 +1,8 @@
 package com.unevento.api.controllers;
 
 
-import com.unevento.api.modelo.Usuario;
-import com.unevento.api.repository.UserRepository;
+import com.unevento.api.domain.modelo.Usuario;
+import com.unevento.api.domain.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;

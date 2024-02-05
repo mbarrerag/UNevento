@@ -1,7 +1,7 @@
 package com.unevento.api.controllers;
 
-import com.unevento.api.modelo.Eventos;
-import com.unevento.api.repository.EventRepository;
+import com.unevento.api.domain.modelo.Eventos;
+import com.unevento.api.domain.repository.EventRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;

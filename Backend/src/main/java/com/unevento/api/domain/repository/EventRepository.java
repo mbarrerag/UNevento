@@ -1,7 +1,6 @@
-package com.unevento.api.repository;
+package com.unevento.api.domain.repository;
 
-import com.unevento.api.modelo.Eventos;
-import jdk.jfr.Event;
+import com.unevento.api.domain.modelo.Eventos;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,16 +1,14 @@
 package com.unevento.api.controllers;
 
-import com.unevento.api.modelo.Eventos;
-import com.unevento.api.records.UpdateAnswerDataEvent;
-import com.unevento.api.repository.EventRepository;
+import com.unevento.api.domain.modelo.Eventos;
+import com.unevento.api.domain.records.UpdateAnswerDataEvent;
+import com.unevento.api.domain.repository.EventRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.awt.*;
 
 @RestController
 @RequestMapping("/getevent")

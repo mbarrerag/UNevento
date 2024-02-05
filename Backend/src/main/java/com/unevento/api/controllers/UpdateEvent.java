@@ -1,10 +1,10 @@
 package com.unevento.api.controllers;
 
-import com.unevento.api.modelo.Categorias;
-import com.unevento.api.modelo.Eventos;
-import com.unevento.api.modelo.Facultades;
-import com.unevento.api.records.UpdateAnswerDataEvent;
-import com.unevento.api.repository.EventRepository;
+import com.unevento.api.domain.modelo.Categorias;
+import com.unevento.api.domain.modelo.Eventos;
+import com.unevento.api.domain.modelo.Facultades;
+import com.unevento.api.domain.records.UpdateAnswerDataEvent;
+import com.unevento.api.domain.repository.EventRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ public class UpdateEvent {
 
 
     @PutMapping
-    public ResponseEntity<UpdateAnswerDataEvent> updateEvent(@RequestBody com.unevento.api.records.UpdateEvent updateEvent) {
+    public ResponseEntity<UpdateAnswerDataEvent> updateEvent(@RequestBody com.unevento.api.domain.records.UpdateEvent updateEvent) {
 
         try {
             Eventos eventos = eventRepository.getReferenceById(updateEvent.id());

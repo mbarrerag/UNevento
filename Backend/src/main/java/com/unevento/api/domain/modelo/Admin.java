@@ -1,4 +1,4 @@
-package com.unevento.api.modelo;
+package com.unevento.api.domain.modelo;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

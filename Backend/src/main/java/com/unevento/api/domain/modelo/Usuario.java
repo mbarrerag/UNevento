@@ -1,7 +1,7 @@
-package com.unevento.api.modelo;
+package com.unevento.api.domain.modelo;
 
 
-import com.unevento.api.records.NewUser;
+import com.unevento.api.domain.records.NewUser;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

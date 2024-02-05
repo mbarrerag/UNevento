@@ -1,7 +1,6 @@
-package com.unevento.api.records;
+package com.unevento.api.domain.records;
 
-import com.unevento.api.modelo.Usuario;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
+import com.unevento.api.domain.modelo.Usuario;
 
 public record GetAllUsers(Long id, String nombre, String apellido, String email, String contrasena) {
 

@@ -1,7 +1,7 @@
-package com.unevento.api.modelo;
+package com.unevento.api.domain.modelo;
 
 import com.unevento.api.controllers.NewEvents;
-import com.unevento.api.records.NewEvent;
+import com.unevento.api.domain.records.NewEvent;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -11,9 +11,7 @@ import lombok.Setter;
 
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "evento")
