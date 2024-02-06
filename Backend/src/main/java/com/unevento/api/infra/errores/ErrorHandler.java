@@ -1,4 +1,4 @@
-package com.unevento.api.infra;
+package com.unevento.api.infra.errores;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
