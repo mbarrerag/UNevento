@@ -1,6 +1,8 @@
 package com.unevento.api.controllers;
 
+import com.unevento.api.domain.modelo.Usuario;
 import com.unevento.api.domain.records.DataAuthentificationUser;
+import com.unevento.api.domain.records.DataJWTToken;
 import com.unevento.api.infra.security.TokenService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -27,22 +29,22 @@ public class Login {
     }
 
     @PostMapping
-    public ResponseEntity<String> login(@RequestBody DataAuthentificationUser dataAuthentificationUser) {
+    public ResponseEntity<DataJWTToken> login(@RequestBody DataAuthentificationUser dataAuthentificationUser) {
         try {
             // Authenticate user credentials
             Authentication authenticationToken = new UsernamePasswordAuthenticationToken(dataAuthentificationUser.username(), dataAuthentificationUser.password());
-            authenticationManager.authenticate(authenticationToken);
+            var usuerAuthentificated = authenticationManager.authenticate(authenticationToken);
 
             // Generate RSA key pair
             KeyPair keyPair = TokenService.generateRSAKeyPair();
 
             // Generate RS256 token using the generated key pair
-            String JWTtoken = tokenService.generateRS256Token(keyPair);
+            String JWTtoken = tokenService.generateRS256Token((Usuario) usuerAuthentificated.getPrincipal(), keyPair);
 
             // Verify the generated token using the public key
             tokenService.verifyRS256Token(JWTtoken, (RSAPublicKey) keyPair.getPublic());
 
-            return ResponseEntity.ok(JWTtoken);
+            return ResponseEntity.ok(new DataJWTToken(JWTtoken));
         } catch (Exception e) {
             throw new RuntimeException("Error during login", e);
         }
