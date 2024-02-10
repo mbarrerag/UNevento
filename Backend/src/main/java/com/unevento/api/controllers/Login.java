@@ -1,21 +1,24 @@
 package com.unevento.api.controllers;
 
-
 import com.unevento.api.domain.records.DataAuthentificationUser;
 import com.unevento.api.infra.security.TokenService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.security.KeyPair;
+import java.security.interfaces.RSAPublicKey;
 
 @RestController
 @RequestMapping("/login")
 public class Login {
 
-
     private final AuthenticationManager authenticationManager;
-
     private final TokenService tokenService;
 
     public Login(AuthenticationManager authenticationManager, TokenService tokenService) {
@@ -24,17 +27,24 @@ public class Login {
     }
 
     @PostMapping
-    public ResponseEntity login(@RequestBody DataAuthentificationUser dataAuthentificationUser) {
-
+    public ResponseEntity<String> login(@RequestBody DataAuthentificationUser dataAuthentificationUser) {
         try {
+            // Authenticate user credentials
             Authentication authenticationToken = new UsernamePasswordAuthenticationToken(dataAuthentificationUser.username(), dataAuthentificationUser.password());
+            authenticationManager.authenticate(authenticationToken);
 
-            String JWTtoken = TokenService.generateRS256Token(); // Generate RS256 token
+            // Generate RSA key pair
+            KeyPair keyPair = TokenService.generateRSAKeyPair();
+
+            // Generate RS256 token using the generated key pair
+            String JWTtoken = tokenService.generateRS256Token(keyPair);
+
+            // Verify the generated token using the public key
+            tokenService.verifyRS256Token(JWTtoken, (RSAPublicKey) keyPair.getPublic());
+
             return ResponseEntity.ok(JWTtoken);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Error during login", e);
         }
-
     }
 }
-

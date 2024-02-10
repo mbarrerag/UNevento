@@ -8,24 +8,31 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
-import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.security.interfaces.RSAPrivateKey;
 import java.util.Date;
 
 public class TokenService {
 
     // Method to generate an RSA key pair
-    private static KeyPair generateRSAKeyPair() throws NoSuchAlgorithmException {
-        KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-        keyPairGenerator.initialize(2048);
-        return keyPairGenerator.generateKeyPair();
+    public static KeyPair generateRSAKeyPair() {
+        try {
+            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+            keyPairGenerator.initialize(2048);
+            return keyPairGenerator.generateKeyPair();
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException("Failed to generate RSA key pair", e);
+        }
     }
 
     // Method to generate JWT token with RS256 algorithm
-    public static String generateRS256Token() {
+    public static String generateRS256Token(KeyPair keyPair) {
         try {
-            KeyPair keyPair = generateRSAKeyPair();
-            Algorithm algorithm = Algorithm.RSA256((RSAPublicKey) keyPair.getPublic(), (RSAPrivateKey) keyPair.getPrivate());
+            RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+            RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+            System.out.println("Public key: " + publicKey);
+            System.out.println("Private key: " + privateKey);
+            Algorithm algorithm = Algorithm.RSA256(publicKey, privateKey);
 
             return JWT.create()
                     .withIssuer("UNevento")
@@ -37,28 +44,17 @@ public class TokenService {
     }
 
     // Method to verify JWT token with RS256 algorithm
-    public static void verifyRS256Token(String token) {
+    public static void verifyRS256Token(String token, RSAPublicKey publicKey) {
         try {
-            KeyPair keyPair = generateRSAKeyPair();
-            Algorithm algorithm = Algorithm.RSA256((RSAPublicKey) keyPair.getPublic(), (RSAPrivateKey) keyPair.getPrivate());
+            Algorithm algorithm = Algorithm.RSA256(publicKey, null); // No se necesita la clave privada para la verificación
             JWTVerifier verifier = JWT.require(algorithm)
                     .withIssuer("UNevento")
                     .build();
             verifier.verify(token);
+
             System.out.println("Token verification successful.");
         } catch (JWTVerificationException exception) {
             throw new RuntimeException("Token verification failed", exception);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
         }
-    }
-
-    public static void main(String[] args) {
-        // Generate token
-        String token = generateRS256Token();
-        System.out.println("Generated token: " + token);
-
-        // Verify token
-        verifyRS256Token(token);
     }
 }
