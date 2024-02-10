@@ -17,20 +17,24 @@ public class Login {
     private final AuthenticationManager authenticationManager;
 
     private final TokenService tokenService;
+
     public Login(AuthenticationManager authenticationManager, TokenService tokenService) {
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
     }
 
     @PostMapping
-    public ResponseEntity login(@RequestBody DataAuthentificationUser dataAuthentificationUser){
+    public ResponseEntity login(@RequestBody DataAuthentificationUser dataAuthentificationUser) {
 
-        Authentication authenticationToken = new UsernamePasswordAuthenticationToken(dataAuthentificationUser.username(), dataAuthentificationUser.password());
+        try {
+            Authentication authenticationToken = new UsernamePasswordAuthenticationToken(dataAuthentificationUser.username(), dataAuthentificationUser.password());
 
-        authenticationManager.authenticate(authenticationToken);
-        var JWTtoken  = tokenService.generateToken();
-        return ResponseEntity.ok(JWTtoken);
+            String JWTtoken = TokenService.generateRS256Token(); // Generate RS256 token
+            return ResponseEntity.ok(JWTtoken);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
     }
-
-    }
+}
 

@@ -30,4 +30,8 @@ public class SecurityConfiguration {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public TokenService tokenService() {
+        return new TokenService();
+    }
 }
