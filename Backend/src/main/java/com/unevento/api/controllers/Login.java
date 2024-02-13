@@ -2,7 +2,7 @@ package com.unevento.api.controllers;
 
 import com.unevento.api.domain.modelo.Usuario;
 import com.unevento.api.domain.records.DataAuthentificationUser;
-import com.unevento.api.domain.records.DataJWTToken;
+import com.unevento.api.infra.security.DataJWTToken;
 import com.unevento.api.infra.security.TokenService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;

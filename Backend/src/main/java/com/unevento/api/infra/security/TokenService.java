@@ -38,19 +38,11 @@ public class TokenService {
         try {
             RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
             RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+
             System.out.println("Public key: " + publicKey);
             System.out.println("Private key: " + privateKey);
 
-            // Convertir la clave pública a diferentes formatos
-            String spki = Base64.getEncoder().encodeToString(publicKey.getEncoded());
-            String pkcs1 = getPKCS1Format(publicKey);
-            String x509 = getX509Format(publicKey);
-            String jwk = getJWKFormat(publicKey);
 
-            System.out.println("SPKI format: " + spki);
-            System.out.println("PKCS #1 format: " + pkcs1);
-            System.out.println("X.509 Certificate format: " + x509);
-            System.out.println("JWK string format: " + jwk);
 
             Algorithm algorithm = Algorithm.RSA256(publicKey, privateKey);
 
