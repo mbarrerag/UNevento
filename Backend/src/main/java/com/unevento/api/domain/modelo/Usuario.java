@@ -33,7 +33,9 @@ public class Usuario implements UserDetails {
     private String correo;
     @NotBlank
     private String password;
-
+    @NotBlank
+    @Column(name = "Public_KEY")
+    private String publickey;
     private Byte rol = 0;
 
     @Column(name = "FECHA_REGISTRO")
@@ -82,7 +84,7 @@ public class Usuario implements UserDetails {
 
     @Override
     public String getUsername() {
-        return nombre;
+        return correo;
     }
 
     @Override
