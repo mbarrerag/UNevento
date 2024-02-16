@@ -49,10 +49,14 @@ public class Login {
             String JWTtoken = tokenService.generateRS256Token((Usuario) userAuthentificated.getPrincipal(), keyPair);
 
             RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+            BigInteger modulus = publicKey.getModulus();
+            System.out.println("Modulusaasda: " + modulus.toString());
             BigInteger exponent = publicKey.getPublicExponent();
+            String modulusString = modulus.toString();
             String exponentString = exponent.toString();
             usuario.setPublickey(exponentString);  // Verify the generated token using the public key
-            TokenAndUserId tokenAndUserId = new TokenAndUserId(JWTtoken, usuario.getId());
+            usuario.setModulo(modulusString);
+            TokenAndUserId tokenAndUserId = new TokenAndUserId(JWTtoken, usuario.getIdUsuario());
 
             return ResponseEntity.ok(tokenAndUserId);
         } catch (Exception e) {

@@ -24,7 +24,8 @@ public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_usuario;
+    @Column(name = "ID_USUARIO")
+    private Long idUsuario;
     @NotBlank
     private String nombre;
     @NotBlank
@@ -36,6 +37,9 @@ public class Usuario implements UserDetails {
     @NotBlank
     @Column(name = "Public_KEY")
     private String publickey;
+    @NotBlank
+    @Column(name = "modulo")
+    private String modulo;
     private Byte rol = 0;
 
     @Column(name = "FECHA_REGISTRO")
@@ -58,12 +62,12 @@ public class Usuario implements UserDetails {
     }
 
 
-    public void setId(Long id) {
-        this.id_usuario = id;
+    public void setIdUsuario(Long id) {
+        this.idUsuario = id;
     }
 
-    public Long getId() {
-        return id_usuario;
+    public Long getIdUsuario() {
+        return idUsuario;
     }
 
 

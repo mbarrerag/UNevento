@@ -31,8 +31,8 @@ public class NewUser {
         user.setPassword(encodedPassword);
         user = userRepository.save(user);
 
-      UpdateAnswerDataUser answer = new UpdateAnswerDataUser(user.getId(), user.getNombre(), user.getApellido(), user.getCorreo(), user.getPassword());
-        URI uri = uriBuilder.path("/getuser/{id}").buildAndExpand(user.getId()).toUri();
+      UpdateAnswerDataUser answer = new UpdateAnswerDataUser(user.getIdUsuario(), user.getNombre(), user.getApellido(), user.getCorreo(), user.getPassword());
+        URI uri = uriBuilder.path("/getuser/{id}").buildAndExpand(user.getIdUsuario()).toUri();
       return ResponseEntity.created(uri).body(answer);
     }
 

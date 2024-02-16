@@ -24,7 +24,7 @@ public class GetParticularUser {
     public ResponseEntity<UpdateAnswerDataUser> getParticularEvent(@PathVariable Long id) {
         try {
             Usuario user = userRepository.getById(id);
-            return ResponseEntity.ok(new UpdateAnswerDataUser(user.getId(), user.getNombre(), user.getApellido(), user.getCorreo(), user.getPassword()));
+            return ResponseEntity.ok(new UpdateAnswerDataUser(user.getIdUsuario(), user.getNombre(), user.getApellido(), user.getCorreo(), user.getPassword()));
         } catch (EntityNotFoundException ex) {
             return ResponseEntity.notFound().build();
         }

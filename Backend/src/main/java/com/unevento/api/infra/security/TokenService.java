@@ -1,10 +1,7 @@
 package com.unevento.api.infra.security;
 
 import com.auth0.jwt.JWT;
-import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.auth0.jwt.exceptions.JWTVerificationException;
-import com.auth0.jwt.interfaces.DecodedJWT;
 import com.unevento.api.domain.modelo.Usuario;
 
 import java.security.KeyPair;
@@ -15,11 +12,6 @@ import java.security.interfaces.RSAPrivateKey;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Date;
-
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
-import java.util.Base64;
 
 public class TokenService {
 
@@ -51,7 +43,7 @@ public class TokenService {
                     .withIssuer("UNevento")
                     .withExpiresAt(getExpirationTime()) // Token expires in 1 hour
                     .withSubject(usuario.getNombre())
-                    .withClaim("id", usuario.getId())
+                    .withClaim("id", usuario.getIdUsuario())
                     .sign(algorithm);
         } catch (Exception exception) {
             throw new RuntimeException("Error creating token", exception);
