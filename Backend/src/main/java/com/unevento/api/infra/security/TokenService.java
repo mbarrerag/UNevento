@@ -64,18 +64,5 @@ public class TokenService {
     }
 
     // Method to verify JWT token with RS256 algorithm
-    public static void verifyRS256Token(String token, RSAPublicKey publicKey) {
-        DecodedJWT verifier;
-        try {
 
-            Algorithm algorithm = Algorithm.RSA256(publicKey, null); // No se necesita la clave privada para la verificación
-             verifier = JWT.require(algorithm)
-                    .withIssuer("UNevento")
-                    .build()
-                    .verify(token);
-            verifier.getSubject();
-        } catch (JWTVerificationException exception) {
-            throw new RuntimeException("Token verification failed", exception);
-        }
-    }
 }

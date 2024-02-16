@@ -3,15 +3,13 @@ package com.unevento.api.controllers;
 import com.unevento.api.domain.modelo.Usuario;
 import com.unevento.api.domain.records.DataAuthentificationUser;
 import com.unevento.api.domain.repository.UserRepository;
-import com.unevento.api.infra.security.DataJWTToken;
+import com.unevento.api.infra.security.TokenAndUserId;
 import com.unevento.api.infra.security.TokenService;
 import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +35,7 @@ public class Login {
 
     @PostMapping
     @Transactional
-    public ResponseEntity<DataJWTToken> login(@RequestBody DataAuthentificationUser dataAuthentificationUser) {
+    public ResponseEntity<TokenAndUserId> login(@RequestBody DataAuthentificationUser dataAuthentificationUser) {
         try {
             // Authenticate user credentials
             Authentication authenticationToken = new UsernamePasswordAuthenticationToken(dataAuthentificationUser.correo(), dataAuthentificationUser.password());
@@ -49,13 +47,14 @@ public class Login {
 
             // Generate RS256 token using the generated key pair
             String JWTtoken = tokenService.generateRS256Token((Usuario) userAuthentificated.getPrincipal(), keyPair);
+
             RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
             BigInteger exponent = publicKey.getPublicExponent();
             String exponentString = exponent.toString();
             usuario.setPublickey(exponentString);  // Verify the generated token using the public key
+            TokenAndUserId tokenAndUserId = new TokenAndUserId(JWTtoken, usuario.getId());
 
-
-            return ResponseEntity.ok(new DataJWTToken(JWTtoken));
+            return ResponseEntity.ok(tokenAndUserId);
         } catch (Exception e) {
             throw new RuntimeException("Error during login", e);
         }
