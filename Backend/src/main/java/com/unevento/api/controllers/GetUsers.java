@@ -17,7 +17,6 @@ public class GetUsers {
 
     private final UserRepository userRepository;
 
-
     public GetUsers(UserRepository userRepository) {
         this.userRepository = userRepository;
     }

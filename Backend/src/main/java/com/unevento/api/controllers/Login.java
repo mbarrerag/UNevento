@@ -40,17 +40,11 @@ public class Login {
             // Authenticate user credentials
             Authentication authenticationToken = new UsernamePasswordAuthenticationToken(dataAuthentificationUser.correo(), dataAuthentificationUser.password());
             var userAuthentificated = authenticationManager.authenticate(authenticationToken);
-            Usuario usuario = (Usuario) userRepository.findByCorreo(dataAuthentificationUser.correo());
-            System.out.println(usuario.getNombre());
-            // Generate RSA key pair
+            Usuario usuario = (Usuario) userRepository.findByCorreo(dataAuthentificationUser.correo());// Generate RSA key pair
             KeyPair keyPair = TokenService.generateRSAKeyPair();
-
-            // Generate RS256 token using the generated key pair
             String JWTtoken = tokenService.generateRS256Token((Usuario) userAuthentificated.getPrincipal(), keyPair);
-
             RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
             BigInteger modulus = publicKey.getModulus();
-            System.out.println("Modulusaasda: " + modulus.toString());
             BigInteger exponent = publicKey.getPublicExponent();
             String modulusString = modulus.toString();
             String exponentString = exponent.toString();

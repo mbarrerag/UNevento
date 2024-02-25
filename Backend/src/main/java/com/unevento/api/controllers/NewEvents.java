@@ -1,5 +1,4 @@
 package com.unevento.api.controllers;
-
 import com.unevento.api.domain.modelo.Eventos;
 import com.unevento.api.domain.modelo.Usuario;
 import com.unevento.api.domain.records.NewEvent;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
-
 import java.net.URI;
 
 @RestController
