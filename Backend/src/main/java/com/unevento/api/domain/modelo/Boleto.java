@@ -21,10 +21,14 @@ public class Boleto {
     @OneToMany(mappedBy = "boleto")
     private Set<Asistente> asistentes = new HashSet<Asistente>();
 
-    private int cantidad;
+    private String nombre_usuario;
 
     public Boleto() {
 
+    }
+
+    public Boleto(String nombre_usuarios) {
+        this.nombre_usuario = nombre_usuarios;
     }
 
     public void setId_boleto(Long idBoleto) {

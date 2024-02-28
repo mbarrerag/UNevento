@@ -1,12 +1,11 @@
 package com.unevento.api.domain.modelo;
 
+import com.unevento.api.domain.records.AsistToEvents;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "asistente")
@@ -19,14 +18,16 @@ public class Asistente {
     private Long id_asistente;
 
 
-    @ManyToMany(mappedBy = "asistentes")
-    private Set<Eventos> eventos = new HashSet<Eventos>();
-
+    @ManyToOne
+    @JoinColumn(name = "id_evento")
+    private Eventos evento;
     @ManyToOne
     @JoinColumn(name = "id_usuario")  // Ajustar aquí
     private Usuario usuario;
 
-    private Date fecha_registro = new Date();
+    private LocalDateTime fecha_registro = LocalDateTime.now();
+    @Enumerated(EnumType.STRING)
+    private Estado estado;
 
     @ManyToOne
     @JoinColumn(name = "id_boleto")  // Assuming there's a foreign key column named 'boleto_id'
@@ -34,6 +35,16 @@ public class Asistente {
 
     public Asistente() {
 
+    }
+
+
+    public Asistente(AsistToEvents asistToEvents, Eventos eventos, Usuario usuario) {
+     this.usuario = usuario;
+     this.evento = eventos;
+     this.estado = Estado.valueOf(asistToEvents.estado());
+     if(asistToEvents.ifBoleto() == 1){
+         Boleto boleto = new Boleto(usuario.getNombre() + usuario.getApellido());
+     }
     }
 
     public void setId_asistente(Long idAsistente) {
