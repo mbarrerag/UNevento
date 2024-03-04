@@ -1,5 +1,5 @@
 
-![UNeventoUNVerdeFondoBlanco](https://github.com/mbarrerag/UNevento_Back/assets/101472701/15437573-ebca-4c22-9ebf-7daf56acc114)
+![UNeventoUNVerde](https://github.com/mbarrerag/UNevento_Back/assets/101472701/9011e4ea-2cd9-44c0-9718-7ce46faed3be)
 
 # UNevento
 
