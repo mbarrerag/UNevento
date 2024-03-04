@@ -1,3 +1,6 @@
+
+![UNeventoUNVerdeFondoBlanco](https://github.com/mbarrerag/UNevento_Back/assets/101472701/15437573-ebca-4c22-9ebf-7daf56acc114)
+
 # UNevento
 
 UNevento is a Spring Boot project designed to manage events with the help of Spring Security for authentication and authorization. This application provides endpoints to perform CRUD operations on events and ensures secure access to these endpoints using Spring Security.
