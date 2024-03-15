@@ -6,6 +6,8 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
@@ -24,7 +26,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-
+        System.out.println("SecurityFilter");
         var token = request.getHeader("Authorization");
 
         if (token != null) {
@@ -38,6 +40,8 @@ public class SecurityFilter extends OncePerRequestFilter {
                 System.out.println("Token:" + jwtToken + " id:" + idLong);
                 Usuario usuario = userRepository.findByIdUsuario(idLong);
                 String subject = verificationToken.verifyRS256Token(id, jwtToken, usuario);
+                var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (Exception e) {
                 throw new RuntimeException("Token inválido");
             }
