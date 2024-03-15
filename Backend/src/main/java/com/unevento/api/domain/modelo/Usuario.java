@@ -37,9 +37,11 @@ public class Usuario implements UserDetails {
     @NotBlank
     @Column(name = "Public_KEY")
     private String publickey;
+
     @NotBlank
     @Column(name = "modulo")
     private String modulo;
+
     private Byte rol = 0;
 
     @Column(name = "FECHA_REGISTRO")

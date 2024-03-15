@@ -9,6 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface EventRepository extends JpaRepository<Eventos, Long> {
 
     Page<Eventos> findByActivoTrue(Pageable pageable);
-    Eventos findById_eventoOrID(Long id);
+//    Eventos findById_eventoOrID(Long id);
 
 }

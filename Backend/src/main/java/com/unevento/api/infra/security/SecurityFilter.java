@@ -35,15 +35,12 @@ public class SecurityFilter extends OncePerRequestFilter {
 
             VerificationTokenService verificationToken = new VerificationTokenService();
             try {
-                System.out.println("Token:" + jwtToken+ " id:" + idLong);
+                System.out.println("Token:" + jwtToken + " id:" + idLong);
                 Usuario usuario = userRepository.findByIdUsuario(idLong);
                 String subject = verificationToken.verifyRS256Token(id, jwtToken, usuario);
-                System.out.println("Subject: " + subject);
-
             } catch (Exception e) {
                 throw new RuntimeException("Token inválido");
             }
-
 
 
         }
