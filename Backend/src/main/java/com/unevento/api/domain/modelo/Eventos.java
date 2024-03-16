@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +32,10 @@ public class Eventos {
 
     @NotBlank
     private String hora;
+
+    @NotBlank
+    private String imagen_path;
+
     @NotNull
     @Column(name = "CANTIDAD_MAX_ASISTENTES")
     private Long capacidad;
@@ -49,7 +52,6 @@ public class Eventos {
             name = "evento",
             joinColumns = @JoinColumn(name = "id_evento"),
             inverseJoinColumns = @JoinColumn(name = "id_asistente")
-
     )
     private List<Asistente> asistentes;
     @Column(name = "FECHA_REGISTRO")
@@ -57,7 +59,7 @@ public class Eventos {
     private Date fecha_evento = new Date();
     private int activo = 1;
 
-    public  Eventos(NewEvent dataEvent, Usuario user){
+    public Eventos(NewEvent dataEvent, Usuario user, String imagen_path) {
         this.usuario_creador = user;
         this.nombre = dataEvent.nombre();
         this.descripcion = dataEvent.descripcion();
@@ -67,6 +69,8 @@ public class Eventos {
         this.fecha_evento = dataEvent.fechaEvento();
         this.capacidad = dataEvent.capacidad();
         this.hora = dataEvent.hora();
+        this.imagen_path = imagen_path;
+
     }
 
     public Eventos(NewEvents newEvents) {
@@ -77,12 +81,11 @@ public class Eventos {
 
     }
 
+    public Long getId_evento() {
+        return id_evento;
+    }
 
     public void setId_evento(Long idEvento) {
         this.id_evento = idEvento;
-    }
-
-    public Long getId_evento() {
-        return id_evento;
     }
 }
