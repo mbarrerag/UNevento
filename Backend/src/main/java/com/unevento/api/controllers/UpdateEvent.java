@@ -7,7 +7,10 @@ import com.unevento.api.domain.records.UpdateAnswerDataEvent;
 import com.unevento.api.domain.repository.EventRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/updatetevent")
@@ -35,7 +38,7 @@ public class UpdateEvent {
 
             // Guardar la entidad actualizada en la base de datos
             eventRepository.save(eventos);
-            return ResponseEntity.ok(new UpdateAnswerDataEvent(eventos.getId_evento(), eventos.getNombre(), eventos.getDescripcion(), eventos.getLugar(), eventos.getCategoria(), eventos.getFacultad(), eventos.getFecha_evento(), eventos.getCapacidad(), eventos.getHora()));
+            return ResponseEntity.ok(new UpdateAnswerDataEvent(eventos.getIdevento(), eventos.getNombre(), eventos.getDescripcion(), eventos.getLugar(), eventos.getCategoria(), eventos.getFacultad(), eventos.getFecha_evento(), eventos.getCapacidad(), eventos.getHora()));
         } catch (EntityNotFoundException ex) {
             return ResponseEntity.notFound().build();
         }

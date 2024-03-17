@@ -26,7 +26,7 @@ public class GetParticularEvent {
     public ResponseEntity<UpdateAnswerDataEvent> getParticularEvent(@PathVariable Long id) {
         try {
             Eventos evento = eventRepository.getById(id);
-            return ResponseEntity.ok(new UpdateAnswerDataEvent(evento.getId_evento(), evento.getNombre(), evento
+            return ResponseEntity.ok(new UpdateAnswerDataEvent(evento.getIdevento(), evento.getNombre(), evento
                     .getDescripcion(), evento.getLugar(), evento.getCategoria(), evento.getFacultad(), evento.getFecha_evento(), evento.getCapacidad(), evento.getHora()));
         } catch (EntityNotFoundException ex) {
             return ResponseEntity.notFound().build();

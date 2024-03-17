@@ -74,8 +74,8 @@ public class NewEvents {
             throw new RuntimeException(ex);
         }
 
-        UpdateAnswerDataEvent answer = new UpdateAnswerDataEvent(eventos.getId_evento(), eventos.getNombre(), eventos.getDescripcion(), eventos.getLugar(), eventos.getCategoria(), eventos.getFacultad(), eventos.getFecha_evento(), eventos.getCapacidad(), eventos.getHora());
-        URI uri = uriBuilder.path("/getevent/{id}").buildAndExpand(eventos.getId_evento()).toUri();
+        UpdateAnswerDataEvent answer = new UpdateAnswerDataEvent(eventos.getIdevento(), eventos.getNombre(), eventos.getDescripcion(), eventos.getLugar(), eventos.getCategoria(), eventos.getFacultad(), eventos.getFecha_evento(), eventos.getCapacidad(), eventos.getHora());
+        URI uri = uriBuilder.path("/getevent/{id}").buildAndExpand(eventos.getIdevento()).toUri();
         return ResponseEntity.created(uri).body(answer);
 
     }

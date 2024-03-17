@@ -19,10 +19,10 @@ public class Asistente {
 
 
     @ManyToOne
-    @JoinColumn(name = "id_evento")
+    @JoinColumn(name = "evento_id")
     private Eventos evento;
     @ManyToOne
-    @JoinColumn(name = "id_usuario")  // Ajustar aquí
+    @JoinColumn(name = "ID_USUARIO_EVENTO")  // Ajustar aquí
     private Usuario usuario;
 
     private LocalDateTime fecha_registro = LocalDateTime.now();
@@ -38,20 +38,21 @@ public class Asistente {
     }
 
 
-    public Asistente(AsistToEvents asistToEvents, Eventos eventos, Usuario usuario) {
-     this.usuario = usuario;
-     this.evento = eventos;
-     this.estado = Estado.valueOf(asistToEvents.estado());
-     if(asistToEvents.ifBoleto() == 1){
-         Boleto boleto = new Boleto(usuario.getNombre() + usuario.getApellido());
-     }
-    }
-
-    public void setId_asistente(Long idAsistente) {
-        this.id_asistente = idAsistente;
+    public Asistente(AsistToEvents asistToEvents, Eventos eventos, Usuario usuario, Boleto boleto) {
+        this.usuario = usuario;
+        this.evento = eventos;
+        this.estado = Estado.valueOf(asistToEvents.estado());
+        this.boleto = boleto;
+        //     if(asistToEvents.ifBoleto() == 1){
+//         Boleto boleto = new Boleto(usuario.getNombre() + usuario.getApellido());
+//     }
     }
 
     public Long getId_asistente() {
         return id_asistente;
+    }
+
+    public void setId_asistente(Long idAsistente) {
+        this.id_asistente = idAsistente;
     }
 }

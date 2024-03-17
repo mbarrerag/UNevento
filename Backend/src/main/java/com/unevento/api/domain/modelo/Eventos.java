@@ -19,10 +19,10 @@ import java.util.List;
 @AllArgsConstructor
 
 public class Eventos {
-
+    @Column(name = "ID_EVENTO")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_evento;
+    private Long idevento;
     @NotBlank
     private String nombre;
     @NotBlank
@@ -81,11 +81,11 @@ public class Eventos {
 
     }
 
-    public Long getId_evento() {
-        return id_evento;
+    public Long getIdevento() {
+        return idevento;
     }
 
-    public void setId_evento(Long idEvento) {
-        this.id_evento = idEvento;
+    public void setIdevento(Long idEvento) {
+        this.idevento = idEvento;
     }
 }

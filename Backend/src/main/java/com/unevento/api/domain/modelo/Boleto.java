@@ -1,11 +1,10 @@
 package com.unevento.api.domain.modelo;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,9 +12,15 @@ import java.util.Set;
 @Entity
 @Table(name = "boleto")
 @AllArgsConstructor
+@Getter
+@Setter
 
 public class Boleto {
+
+
     @Id
+    @Column(name = "ID_BOLETO_BOLETOS")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_boleto;
 
     @OneToMany(mappedBy = "boleto")
@@ -27,15 +32,16 @@ public class Boleto {
 
     }
 
+
     public Boleto(String nombre_usuarios) {
         this.nombre_usuario = nombre_usuarios;
     }
 
-    public void setId_boleto(Long idBoleto) {
-        this.id_boleto = idBoleto;
-    }
-
     public Long getId_boleto() {
         return id_boleto;
+    }
+
+    public void setId_boleto(Long idBoleto) {
+        this.id_boleto = idBoleto;
     }
 }

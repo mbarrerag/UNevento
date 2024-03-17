@@ -11,6 +11,6 @@ public record GetAllEvenets(Long id, String nombre, String descripcion, String l
 
 
     public GetAllEvenets(Eventos eventos) {
-        this(eventos.getId_evento(), eventos.getNombre(), eventos.getDescripcion(), eventos.getLugar(), eventos.getCategoria(), eventos.getFacultad(), eventos.getFecha_evento(), eventos.getCapacidad(), eventos.getHora(), eventos.getActivo());
+        this(eventos.getIdevento(), eventos.getNombre(), eventos.getDescripcion(), eventos.getLugar(), eventos.getCategoria(), eventos.getFacultad(), eventos.getFecha_evento(), eventos.getCapacidad(), eventos.getHora(), eventos.getActivo());
     }
 }
