@@ -29,8 +29,8 @@ public class Asistente {
     @Enumerated(EnumType.STRING)
     private Estado estado;
 
-    @ManyToOne
-    @JoinColumn(name = "id_boleto")  // Assuming there's a foreign key column named 'boleto_id'
+    @OneToOne
+    @JoinColumn(name = "ID_BOLETO") // nombre de la columna de la clave foránea en la tabla Asistente
     private Boleto boleto;
 
     public Asistente() {

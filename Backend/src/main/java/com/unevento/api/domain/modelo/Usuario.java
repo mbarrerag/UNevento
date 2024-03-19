@@ -34,11 +34,9 @@ public class Usuario implements UserDetails {
     private String correo;
     @NotBlank
     private String password;
-    @NotBlank
+
     @Column(name = "Public_KEY")
     private String publickey;
-
-    @NotBlank
     @Column(name = "modulo")
     private String modulo;
 
@@ -52,6 +50,7 @@ public class Usuario implements UserDetails {
 
     @OneToMany(mappedBy = "usuario")
     private List<Asistente> asistentes;
+
     public Usuario() {
 
     }
@@ -63,24 +62,22 @@ public class Usuario implements UserDetails {
         this.password = dataUser.contrasena();
     }
 
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
 
     public void setIdUsuario(Long id) {
         this.idUsuario = id;
     }
 
-    public Long getIdUsuario() {
-        return idUsuario;
-    }
-
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-     return List.of(new GrantedAuthority() {
-         @Override
-         public String getAuthority() {
-             return "ROLE_USER";
-         }
-     });
+        return List.of(new GrantedAuthority() {
+            @Override
+            public String getAuthority() {
+                return "ROLE_USER";
+            }
+        });
     }
 
     @Override

@@ -28,8 +28,10 @@ public class SecurityConfiguration {
         return http.csrf()
                 .disable().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS) //Type of sesion
-                .and().authorizeHttpRequests().requestMatchers(HttpMethod.POST, "/login")
+                .and().authorizeHttpRequests()
+                .requestMatchers(HttpMethod.POST, "/login")
                 .permitAll().requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/newuser").permitAll()
                 .anyRequest()
                 .authenticated().and().addFilterBefore(SecurityFilter, UsernamePasswordAuthenticationFilter.class).build();
     }

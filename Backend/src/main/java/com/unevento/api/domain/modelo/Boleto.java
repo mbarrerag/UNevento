@@ -6,9 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Entity
 @Table(name = "boleto")
 @AllArgsConstructor
@@ -17,14 +14,15 @@ import java.util.Set;
 
 public class Boleto {
 
-
+    
     @Id
     @Column(name = "ID_BOLETO_BOLETOS")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_boleto;
+    private Long idboleto;
 
-    @OneToMany(mappedBy = "boleto")
-    private Set<Asistente> asistentes = new HashSet<Asistente>();
+    @OneToOne
+    @JoinColumn(name = "ID_BOLETO_BOLETOS", referencedColumnName = "idBoleto")
+    private Boleto boleto;
 
     private String nombre_usuario;
 
@@ -38,10 +36,10 @@ public class Boleto {
     }
 
     public Long getId_boleto() {
-        return id_boleto;
+        return idboleto;
     }
 
     public void setId_boleto(Long idBoleto) {
-        this.id_boleto = idBoleto;
+        this.idboleto = idBoleto;
     }
 }

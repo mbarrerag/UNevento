@@ -30,9 +30,13 @@ public class AssistToAnEvent {
 
     @PostMapping
     public void asistToAnEvent(@RequestBody AsistToEvents asistToEvents) {
+
         Eventos eventos = eventRepository.findByIdevento(asistToEvents.eventoid());
         Usuario usuario = userRepository.findByIdUsuario(asistToEvents.idusuario());
         Boleto boleto = new Boleto(usuario.getNombre());
+        boleto.setId_boleto(1L);
+        System.out.println("aa" + boleto.getNombre_usuario() + boleto.getId_boleto());
+
         Asistente asistente = asistentRepository.save(new Asistente(asistToEvents, eventos, usuario, boleto));
     }
 }
