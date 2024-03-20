@@ -14,15 +14,14 @@ import lombok.Setter;
 
 public class Boleto {
 
-    
+
     @Id
     @Column(name = "ID_BOLETO_BOLETOS")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idboleto;
 
-    @OneToOne
-    @JoinColumn(name = "ID_BOLETO_BOLETOS", referencedColumnName = "idBoleto")
-    private Boleto boleto;
+    @OneToOne(mappedBy = "boleto")
+    private Asistente asistente;
 
     private String nombre_usuario;
 

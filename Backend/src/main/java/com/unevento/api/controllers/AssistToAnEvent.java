@@ -6,6 +6,7 @@ import com.unevento.api.domain.modelo.Eventos;
 import com.unevento.api.domain.modelo.Usuario;
 import com.unevento.api.domain.records.AsistToEvents;
 import com.unevento.api.domain.repository.AsistentRepository;
+import com.unevento.api.domain.repository.BoletoRepository;
 import com.unevento.api.domain.repository.EventRepository;
 import com.unevento.api.domain.repository.UserRepository;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,11 +22,13 @@ public class AssistToAnEvent {
     private final AsistentRepository asistentRepository;
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
+    private final BoletoRepository boletoRepository;
 
-    public AssistToAnEvent(AsistentRepository asistentRepository, UserRepository userRepository, EventRepository eventRepository) {
+    public AssistToAnEvent(AsistentRepository asistentRepository, UserRepository userRepository, EventRepository eventRepository, BoletoRepository boletoRepository) {
         this.asistentRepository = asistentRepository;
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
+        this.boletoRepository = boletoRepository;
     }
 
     @PostMapping
@@ -34,7 +37,7 @@ public class AssistToAnEvent {
         Eventos eventos = eventRepository.findByIdevento(asistToEvents.eventoid());
         Usuario usuario = userRepository.findByIdUsuario(asistToEvents.idusuario());
         Boleto boleto = new Boleto(usuario.getNombre());
-        boleto.setId_boleto(1L);
+        boleto = boletoRepository.save(boleto);
         System.out.println("aa" + boleto.getNombre_usuario() + boleto.getId_boleto());
 
         Asistente asistente = asistentRepository.save(new Asistente(asistToEvents, eventos, usuario, boleto));

@@ -52,7 +52,6 @@ public class Usuario implements UserDetails {
     private List<Asistente> asistentes;
 
     public Usuario() {
-
     }
 
     public Usuario(NewUser dataUser) {
