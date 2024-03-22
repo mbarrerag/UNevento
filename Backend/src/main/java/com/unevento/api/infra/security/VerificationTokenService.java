@@ -21,7 +21,7 @@ import java.security.spec.RSAPublicKeySpec;
 public class VerificationTokenService {
 
 
-    public String verifyRS256Token(Long id, String token, Usuario usuario) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
+    public String verifyRS256Token(String token, Usuario usuario) throws NoSuchAlgorithmException, NoSuchProviderException, InvalidKeySpecException {
         DecodedJWT verifier;
 
         System.out.println("Entre");
@@ -50,8 +50,11 @@ public class VerificationTokenService {
         if (verifier.getSubject() == null) {
             throw new RuntimeException("Invalid token");
         }
+        System.out.println("Subject: " + verifier.getSubject());
         return verifier.getSubject();
 
+
     }
+
 }
 

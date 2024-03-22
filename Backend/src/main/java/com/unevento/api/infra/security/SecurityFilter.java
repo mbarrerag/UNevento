@@ -39,7 +39,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             try {
                 System.out.println("Token:" + jwtToken + " id:" + idLong);
                 Usuario usuario = userRepository.findByIdUsuario(idLong);
-                String subject = verificationToken.verifyRS256Token(id, jwtToken, usuario);
+                String subject = verificationToken.verifyRS256Token(jwtToken, usuario);
                 var authentication = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } catch (Exception e) {

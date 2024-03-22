@@ -11,32 +11,28 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/newuser")
-
 public class NewUser {
+
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-
     public NewUser(UserRepository userRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
-
         this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping
     public ResponseEntity<UpdateAnswerDataUser> newUser(@RequestBody com.unevento.api.domain.records.NewUser dataUser, UriComponentsBuilder uriBuilder) {
-      String encodedPassword = passwordEncoder.encode(dataUser.contrasena());
+        String encodedPassword = passwordEncoder.encode(dataUser.contrasena());
         Usuario user = new Usuario(dataUser);
         user.setPassword(encodedPassword);
         user = userRepository.save(user);
-      UpdateAnswerDataUser answer = new UpdateAnswerDataUser(user.getIdUsuario(), user.getNombre(), user.getApellido(), user.getCorreo(), user.getPassword());
-      URI uri = uriBuilder.path("/getuser/{id}").buildAndExpand(user.getIdUsuario()).toUri();
-      return ResponseEntity.created(uri).body(answer);
+        UpdateAnswerDataUser answer = new UpdateAnswerDataUser(user.getIdUsuario(), user.getNombre(), user.getApellido(), user.getCorreo(), user.getPassword());
+        URI uri = uriBuilder.path("/getuser/{id}").buildAndExpand(user.getIdUsuario()).toUri();
+        return ResponseEntity.created(uri).body(answer);
     }
 
-   }
 
-
-
-
+}
