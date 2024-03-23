@@ -58,13 +58,13 @@ public class NewEvents {
             }
             String fileExtension = fileNameOrginal.substring(fileNameOrginal.lastIndexOf("."));
             String newFileName = fileName + fileExtension;
-            File folder = new File("Backend/src/main/java/com/unevento/api/services/images");
+            File folder = new File("Backend/src/main/resources/images");
             if (!folder.exists()) {
                 System.out.println("Creando carpeta");
                 folder.mkdirs();
             }
 
-            Path path = Paths.get("Backend/src/main/java/com/unevento/api/services/images/" + newFileName);
+            Path path = Paths.get("Backend/src/main/resources/images/" + newFileName);
             Files.write(path, bytes);
 
             eventos = eventRepository.save(new Eventos(newEvent, user, path.toString()));
