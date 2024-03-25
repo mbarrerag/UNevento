@@ -31,7 +31,7 @@ public class UserInformation {
 
             Usuario user = (Usuario) userRepository.findByCorreo(getInformation.email());
 
-            return user.getIdUsuario() != getInformation.id() ? ResponseEntity.ok(new com.unevento.api.domain.records.UserInformation(user.getIdUsuario(), user.getUsername(), user.getApellido(), user.getCorreo(), user.getRol())) : ResponseEntity.notFound().build();
+            return ResponseEntity.ok(new com.unevento.api.domain.records.UserInformation(user.getIdUsuario(), user.getUsername(), user.getApellido(), user.getCorreo(), user.getRol()));
         } catch (EntityNotFoundException ex) {
             return ResponseEntity.notFound().build();
         }
