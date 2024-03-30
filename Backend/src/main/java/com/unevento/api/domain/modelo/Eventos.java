@@ -46,7 +46,7 @@ public class Eventos {
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
-    private Usuario usuario_creador;
+    private Usuario usuarioCreador;
     @ManyToMany
     @JoinTable(
             name = "evento",
@@ -60,7 +60,7 @@ public class Eventos {
     private int activo = 1;
 
     public Eventos(NewEvent dataEvent, Usuario user, String imagen_path) {
-        this.usuario_creador = user;
+        this.usuarioCreador = user;
         this.nombre = dataEvent.nombre();
         this.descripcion = dataEvent.descripcion();
         this.lugar = dataEvent.lugar();

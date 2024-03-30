@@ -45,7 +45,7 @@ public class Usuario implements UserDetails {
     @Column(name = "FECHA_REGISTRO")
     private LocalDateTime fecha_registro = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "usuario_creador")
+    @OneToMany(mappedBy = "usuarioCreador")
     private List<Eventos> eventos;
 
     @OneToMany(mappedBy = "usuario")
@@ -57,7 +57,7 @@ public class Usuario implements UserDetails {
     public Usuario(NewUser dataUser) {
         this.nombre = dataUser.nombre();
         this.apellido = dataUser.apellido();
-        this.correo = dataUser.email();
+        this.correo = dataUser.correo();
         this.password = dataUser.contrasena();
     }
 
