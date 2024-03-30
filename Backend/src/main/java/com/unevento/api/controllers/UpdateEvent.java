@@ -7,12 +7,10 @@ import com.unevento.api.domain.records.UpdateAnswerDataEvent;
 import com.unevento.api.domain.repository.EventRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/updatetevent")
 public class UpdateEvent {
 

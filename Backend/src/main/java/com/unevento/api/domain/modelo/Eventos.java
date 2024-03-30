@@ -33,7 +33,7 @@ public class Eventos {
     @NotBlank
     private String hora;
 
-    @NotBlank
+
     private String imagen_path;
 
     @NotNull
