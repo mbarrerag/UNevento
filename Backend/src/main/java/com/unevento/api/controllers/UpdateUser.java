@@ -32,7 +32,7 @@ public class UpdateUser {
             // Guardar la entidad actualizada en la base de datos
             userRepository.save(usuario);
 
-            return ResponseEntity.ok(new UpdateAnswerDataUser(usuario.getIdUsuario(), usuario.getNombre(), usuario.getApellido()));
+            return ResponseEntity.ok(new UpdateAnswerDataUser(usuario.getIdUsuario(), usuario.getCorreo(), usuario.getNombre(), usuario.getApellido()));
         } catch (EntityNotFoundException ex) {
             return ResponseEntity.notFound().build();
         }

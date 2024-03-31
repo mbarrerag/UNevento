@@ -29,7 +29,7 @@ public class NewUser {
         Usuario user = new Usuario(dataUser);
         user.setPassword(encodedPassword);
         user = userRepository.save(user);
-        UpdateAnswerDataUser answer = new UpdateAnswerDataUser(user.getIdUsuario(), user.getNombre(), user.getApellido());
+        UpdateAnswerDataUser answer = new UpdateAnswerDataUser(user.getIdUsuario(), user.getCorreo(), user.getNombre(), user.getApellido());
         URI uri = uriBuilder.path("/getuser/{id}").buildAndExpand(user.getIdUsuario()).toUri();
         return ResponseEntity.created(uri).body(answer);
     }
