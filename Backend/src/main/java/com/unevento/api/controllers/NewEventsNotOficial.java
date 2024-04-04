@@ -17,15 +17,15 @@ import java.net.URI;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/neweventun")
+@RequestMapping("/newevent")
 
-public class NewEvents {
+public class NewEventsNotOficial {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
 
-    private final com.unevento.api.services.FileUploadService fileUploadService;
+    private final FileUploadService fileUploadService;
 
-    public NewEvents(EventRepository eventRepository, UserRepository userRepository, FileUploadService fileUploadService) {
+    public NewEventsNotOficial(EventRepository eventRepository, UserRepository userRepository, FileUploadService fileUploadService) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
         this.fileUploadService = fileUploadService;

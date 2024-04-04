@@ -28,7 +28,7 @@ public class GetParticularEvent {
             Eventos evento = eventRepository.getById(id);
             String imageUrl = imageService.getImageName(evento.getImagen_path()); // Get image URL
             return ResponseEntity.ok(new UpdateAnswerDataEvent(evento.getIdevento(), evento.getNombre(), evento
-                    .getDescripcion(), evento.getLugar(), evento.getCategoria(), evento.getFacultad(), evento.getFecha_evento(), evento.getCapacidad(), evento.getHora(), imageUrl));
+                    .getDescripcion(), evento.getLugar(), evento.getCategoria(), evento.getFacultad(), evento.getFecha_evento(), evento.getCapacidad(), evento.getHora(), imageUrl, evento.getTipo()));
         } catch (EntityNotFoundException ex) {
             return ResponseEntity.notFound().build();
         }

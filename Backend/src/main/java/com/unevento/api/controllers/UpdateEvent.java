@@ -50,7 +50,7 @@ public class UpdateEvent {
             // Guardar la entidad actualizada en la base de datos
             eventRepository.save(eventos);
 
-            return ResponseEntity.ok(new UpdateAnswerDataEvent(eventos.getIdevento(), eventos.getNombre(), eventos.getDescripcion(), eventos.getLugar(), eventos.getCategoria(), eventos.getFacultad(), eventos.getFecha_evento(), eventos.getCapacidad(), eventos.getHora(), eventos.getImagen_path()));
+            return ResponseEntity.ok(new UpdateAnswerDataEvent(eventos.getIdevento(), eventos.getNombre(), eventos.getDescripcion(), eventos.getLugar(), eventos.getCategoria(), eventos.getFacultad(), eventos.getFecha_evento(), eventos.getCapacidad(), eventos.getHora(), eventos.getImagen_path(), eventos.getTipo()));
         } catch (EntityNotFoundException ex) {
             return ResponseEntity.notFound().build();
         } catch (Exception ex) {

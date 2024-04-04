@@ -43,6 +43,10 @@ public class Eventos {
     private Categorias categoria;
     @Enumerated(EnumType.STRING)
     private Facultades facultad;
+    @NotNull
+    @Column(name = "TIPO_EVENTO")
+    @Enumerated(EnumType.STRING)
+    private Tipo tipo;
 
     @ManyToOne
     @JoinColumn(name = "id_usuario")
@@ -70,6 +74,7 @@ public class Eventos {
         this.capacidad = dataEvent.capacidad();
         this.hora = dataEvent.hora();
         this.imagen_path = imagen_path;
+        this.tipo = Tipo.valueOf(dataEvent.tipo());
 
     }
 

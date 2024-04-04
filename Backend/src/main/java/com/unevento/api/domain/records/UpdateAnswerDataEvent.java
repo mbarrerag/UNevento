@@ -7,5 +7,5 @@ import java.util.Date;
 
 public record UpdateAnswerDataEvent(Long id, String nombre, String descripcion, String lugar, Categorias categoria,
                                     Facultades Facultad, Date fechaEvento, Long capacidad, String hora, String
-                                            imageUrl) {
+                                            imageUrl, com.unevento.api.domain.modelo.Tipo tipo) {
 }
