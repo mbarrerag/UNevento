@@ -2,6 +2,8 @@ package com.unevento.api.controllers.services;
 
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+
 @Service
 public class ImageService {
 
@@ -9,7 +11,7 @@ public class ImageService {
         if (imagePath == null) {
             return "as.png"; // Default image name
         } else {
-            int lastIndex = imagePath.lastIndexOf('/');
+            int lastIndex = imagePath.lastIndexOf(File.separator);
             if (lastIndex != -1) {
                 return imagePath.substring(lastIndex + 1); // Extract the file name from the path
             } else {

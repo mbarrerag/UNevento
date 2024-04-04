@@ -50,6 +50,8 @@ public class Usuario implements UserDetails {
 
     @OneToMany(mappedBy = "usuario")
     private List<Asistente> asistentes;
+    @Column(name = "imagen_path")
+    private String imagen_path;
 
     public Usuario() {
     }
