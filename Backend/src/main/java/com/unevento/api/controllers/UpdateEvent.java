@@ -7,12 +7,14 @@ import com.unevento.api.domain.records.UpdateAnswerDataEvent;
 import com.unevento.api.domain.repository.EventRepository;
 import com.unevento.api.services.FileUploadService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @CrossOrigin
+@Transactional
 @RequestMapping("/updatetevent")
 public class UpdateEvent {
 

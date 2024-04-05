@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
+@Transactional
 @RequestMapping("/deletedUser/{id}")
 public class DeletedUser {
 

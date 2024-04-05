@@ -13,6 +13,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @RestController
+@Transactional
+@CrossOrigin
 @RequestMapping("/updateuser")
 public class UpdateUser {
 

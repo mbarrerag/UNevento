@@ -4,7 +4,7 @@ public enum Facultades {
 
     Facultad_De_Ingenieria,
     Facultad_De_Ciencias,
-    Facyltad_De_Ciencias_Humanas,
+    Facultad_De_Ciencias_Humanas,
     Facultad_De_Ciencias_Economicas,
     Facultad_De_Ciencias_Agrarias,
     Facultad_De_Ciencias_De_La_Salud,
