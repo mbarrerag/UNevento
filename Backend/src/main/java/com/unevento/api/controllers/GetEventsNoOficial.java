@@ -16,20 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/home")
-public class GetEvents {
+@RequestMapping("/publicevents")
+public class GetEventsNoOficial {
 
     private final EventRepository eventRepository;
     private final ImageService imageService;
 
-    public GetEvents(EventRepository eventRepository, ImageService imageService) {
+    public GetEventsNoOficial(EventRepository eventRepository, ImageService imageService) {
         this.eventRepository = eventRepository;
         this.imageService = imageService;
     }
 
     @GetMapping
     public ResponseEntity<Page<GetAllEvenets>> getEvents(@PageableDefault(size = 2) Pageable pageable, HttpServletRequest request) {
-        Page<GetAllEvenets> events = eventRepository.findByTipo(Tipo.NO_OFICIAL, pageable)
+        Page<GetAllEvenets> events = eventRepository.findByTipo(Tipo.OFICIAL, pageable)
                 .map(evento -> {
                     String imageUrl = imageService.getImageName(evento.getImagen_path()); // Get image URI
                     return new GetAllEvenets(evento, imageUrl);
