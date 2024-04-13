@@ -4,22 +4,19 @@ public enum Categorias {
 
     Conferencia,
     Concierto,
-    Deporte,
     Charla,
     Introduccion,
     Debate,
     Asamblea,
-
     Espectaculo_de_danzas_o_teatro,
     Seminario,
     Congreso,
     Curso,
     Taller,
     Networking,
-    ActvidadCultural,
-    ActividadDeportiva,
+    Actvidad_Cultural,
+    Actividad_Deportiva,
     Proyeccion_de_peliculas,
     Religioso_y_Espiritual,
-
-
+    Otro
 }
