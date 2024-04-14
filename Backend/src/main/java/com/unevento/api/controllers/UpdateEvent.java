@@ -36,6 +36,7 @@ public class UpdateEvent {
             eventos.setFecha_evento(updateEvent.fechaEvento());
             eventos.setHora(updateEvent.hora());
             eventos.setLugar(updateEvent.lugar());
+            eventos.setCapacidad(updateEvent.capacidad());
             eventos.setFacultad(Facultades.valueOf(updateEvent.Facultad()));
             eventos.setCategoria(Categorias.valueOf(updateEvent.categoria()));
 
