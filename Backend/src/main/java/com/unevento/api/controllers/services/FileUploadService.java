@@ -1,4 +1,4 @@
-package com.unevento.api.services;
+package com.unevento.api.controllers.services;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

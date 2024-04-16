@@ -1,12 +1,13 @@
 package com.unevento.api.controllers;
 
+import com.unevento.api.controllers.services.FileDeletedService;
+import com.unevento.api.controllers.services.FileUploadService;
 import com.unevento.api.domain.modelo.Eventos;
 import com.unevento.api.domain.modelo.Usuario;
 import com.unevento.api.domain.records.NewEvent;
 import com.unevento.api.domain.records.UpdateAnswerDataEvent;
 import com.unevento.api.domain.repository.EventRepository;
 import com.unevento.api.domain.repository.UserRepository;
-import com.unevento.api.services.FileUploadService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,12 +24,15 @@ public class NewEvents {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
 
-    private final com.unevento.api.services.FileUploadService fileUploadService;
+    private final com.unevento.api.controllers.services.FileDeletedService fileDeletedService;
 
-    public NewEvents(EventRepository eventRepository, UserRepository userRepository, FileUploadService fileUploadService) {
+    private final com.unevento.api.controllers.services.FileUploadService fileUploadService;
+
+    public NewEvents(EventRepository eventRepository, UserRepository userRepository, FileUploadService fileUploadService, FileDeletedService fileDeletedService1) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
         this.fileUploadService = fileUploadService;
+        this.fileDeletedService = fileDeletedService1;
     }
 
 
@@ -44,6 +48,7 @@ public class NewEvents {
             } else {
                 // Use FileUploadService to handle file upload and get the path
                 imagePath = fileUploadService.uploadFile(file);
+
             }
 
             eventos = eventRepository.save(new Eventos(newEvent, user, imagePath));

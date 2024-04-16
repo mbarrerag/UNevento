@@ -1,11 +1,12 @@
 package com.unevento.api.controllers;
 
+import com.unevento.api.controllers.services.FileUploadService;
+import com.unevento.api.controllers.services.ImageService;
 import com.unevento.api.domain.modelo.Categorias;
 import com.unevento.api.domain.modelo.Eventos;
 import com.unevento.api.domain.modelo.Facultades;
 import com.unevento.api.domain.records.UpdateAnswerDataEvent;
 import com.unevento.api.domain.repository.EventRepository;
-import com.unevento.api.services.FileUploadService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +20,13 @@ import org.springframework.web.multipart.MultipartFile;
 public class UpdateEvent {
 
     private final EventRepository eventRepository;
-    private final com.unevento.api.services.FileUploadService fileUploadService;
+    private final com.unevento.api.controllers.services.FileUploadService fileUploadService;
+    private final ImageService imageService;
 
-    public UpdateEvent(EventRepository eventRepository, FileUploadService fileUploadService) {
+    public UpdateEvent(EventRepository eventRepository, FileUploadService fileUploadService, ImageService imageService) {
         this.eventRepository = eventRepository;
         this.fileUploadService = fileUploadService;
+        this.imageService = imageService;
     }
 
 
@@ -39,16 +42,8 @@ public class UpdateEvent {
             eventos.setCapacidad(updateEvent.capacidad());
             eventos.setFacultad(Facultades.valueOf(updateEvent.Facultad()));
             eventos.setCategoria(Categorias.valueOf(updateEvent.categoria()));
-
-            String imagePath;
-            if (file == null || file.isEmpty()) {
-                // If no file is provided or the file is empty, assign a default image path
-                imagePath = "Backend/src/main/resources/images/as.png"; // Replace with your default image path
-            } else {
-                // Use FileUploadService to handle file upload and get the path
-                imagePath = fileUploadService.uploadFile(file);
-            }
-            eventos.setImagen_path(imagePath);
+            String imageUrl = imageService.getImageName(eventos.getImagen_path()); // Get image URL
+            eventos.setImagen_path(imageUrl);
 
             // Guardar la entidad actualizada en la base de datos
             eventRepository.save(eventos);

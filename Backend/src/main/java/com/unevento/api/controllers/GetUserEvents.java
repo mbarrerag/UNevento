@@ -31,6 +31,7 @@ public class GetUserEvents {
         Usuario usuario = userRepository.getById(id);
         Page<GetAllUserEvents> events = eventRepository.findByUsuarioCreador(usuario, pageable)
                 .map(evento -> {
+                    
                     String imageUrl = imageService.getImageName(evento.getImagen_path()); // Get image URI
                     return new GetAllUserEvents(evento, imageUrl);
                 });
