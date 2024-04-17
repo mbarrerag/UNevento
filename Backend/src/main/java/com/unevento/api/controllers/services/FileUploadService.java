@@ -14,7 +14,7 @@ public class FileUploadService {
 
     private static final String UPLOAD_DIR = "Backend/src/main/resources/images/";
 
-    public String uploadFile(MultipartFile file) throws IOException {
+    public static String uploadFile(MultipartFile file) throws IOException {
         String fileName = UUID.randomUUID().toString(); // Unique ID for the file
         String fileNameOrginal = file.getOriginalFilename();
         byte[] bytes = file.getBytes();
