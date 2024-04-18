@@ -49,10 +49,8 @@ public class UpdateUser {
                 profilePicturePath = usuario.getImagen_path();
             } else {
                 // Use FileUploadService to handle file upload and get the path
-                System.out.println("Si hay: " + usuario.getImagen_path());
                 FileDeletedService.deleteFile(imageService.getImageName(usuario.getImagen_path()));
                 profilePicturePath = FileUploadService.uploadFile(file);
-                System.out.println("Si hay nuevafoto profilePicturePath: " + profilePicturePath);
             }
             usuario.setImagen_path(profilePicturePath);
             // Guardar la entidad actualizada en la base de datos
