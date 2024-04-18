@@ -51,13 +51,10 @@ public class Eventos {
     @ManyToOne
     @JoinColumn(name = "id_usuario")
     private Usuario usuarioCreador;
-    @ManyToMany
-    @JoinTable(
-            name = "evento",
-            joinColumns = @JoinColumn(name = "id_evento"),
-            inverseJoinColumns = @JoinColumn(name = "id_asistente")
-    )
+
+    @OneToMany(mappedBy = "evento")
     private List<Asistente> asistentes;
+
     @Column(name = "FECHA_REGISTRO")
     private Date fecha_creacion = new Date();
     private Date fecha_evento = new Date();

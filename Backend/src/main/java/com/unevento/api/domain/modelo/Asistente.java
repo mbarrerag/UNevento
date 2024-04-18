@@ -16,8 +16,7 @@ public class Asistente {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     private Long id_asistente;
-
-
+    
     @ManyToOne
     @JoinColumn(name = "evento_id")
     private Eventos evento;
