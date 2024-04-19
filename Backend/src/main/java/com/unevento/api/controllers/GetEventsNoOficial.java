@@ -28,8 +28,8 @@ public class GetEventsNoOficial {
     }
 
     @GetMapping
-    public ResponseEntity<Page<GetAllEvenets>> getEvents(@PageableDefault(size = 2) Pageable pageable, HttpServletRequest request) {
-        Page<GetAllEvenets> events = eventRepository.findByTipo(Tipo.OFICIAL, pageable)
+    public ResponseEntity<Page<GetAllEvenets>> getEvents(@PageableDefault Pageable pageable, HttpServletRequest request) {
+        Page<GetAllEvenets> events = eventRepository.findByTipo(Tipo.NO_OFICIAL, pageable)
                 .map(evento -> {
                     String imageUrl = imageService.getImageName(evento.getImagen_path()); // Get image URI
                     return new GetAllEvenets(evento, imageUrl);
