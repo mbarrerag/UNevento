@@ -23,6 +23,4 @@ public interface EventRepository extends JpaRepository<Eventos, Long> {
 
     Page<Eventos> findByUsuarioCreador(Usuario usuario, Pageable pageable);
 
-    @Query("SELECT e FROM Eventos e WHERE e.tipo = :tipo AND e.fecha_evento >= :currentDate")
-    Page<Eventos> findByTipoAndFechaAfterOrEqual(Tipo tipo, Timestamp currentDate, Pageable pageable);
 }
