@@ -12,7 +12,7 @@ public class MesssageHTML {
             "    <div style=\"width: 600px; margin: 0 auto; background: white; text-align: center;\">\n" +
             "        <div style=\"width: 70%; margin: 0 auto; text-align: center;\">\n" +
             "            <p style=\"font-size: 14px; color: #231f20;\"><strong>Estimado usuario</strong>,</p>\n" +
-            "            <p style=\"font-size: 14px; color: #231f20;\">Su código de verificación es:</p>\n" +
+            "            <p style=\"font-size: 14px; color: #231f20;\">Su código de verificación para el Registro es:</p>\n" +
             "            <div style=\"text-align: center; border-radius: 10px; background-color: #98d119; font-size: 16px;\">\n" +
             "                <p style=\"width: 12%; height: 40px; font-size: 16px; display: inline-block; border-bottom: 1px #fff solid; border-radius: 5px; text-align: center; color: #fff;\">{0}</p>\n" +
             "                <p style=\"width: 12%; height: 40px; font-size: 16px; display: inline-block; border-bottom: 1px #fff solid; border-radius: 5px; text-align: center; color: #fff;\">{1}</p>\n" +

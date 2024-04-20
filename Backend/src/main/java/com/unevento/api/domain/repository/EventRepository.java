@@ -6,6 +6,10 @@ import com.unevento.api.domain.modelo.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.sql.Timestamp;
+import java.time.LocalDate;
 
 public interface EventRepository extends JpaRepository<Eventos, Long> {
 
@@ -18,4 +22,7 @@ public interface EventRepository extends JpaRepository<Eventos, Long> {
     Eventos findByIdevento(Long id);
 
     Page<Eventos> findByUsuarioCreador(Usuario usuario, Pageable pageable);
+
+    @Query("SELECT e FROM Eventos e WHERE e.tipo = :tipo AND e.fecha_evento >= :currentDate ORDER BY e.fecha_evento ASC")
+    Page<Eventos> findByTipoAndFechaAfterOrEqual(Tipo tipo, Timestamp currentDate, Pageable pageable);
 }

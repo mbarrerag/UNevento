@@ -12,7 +12,7 @@ public class FileDeletedService {
 
     private static final String UPLOAD_DIR = "Backend/src/main/resources/images";
 
-    public void deleteFile(String fileName) throws IOException {
+    public static void deleteFile(String fileName) throws IOException {
 
         // Construct the file path using Paths.get()
         Path filePath = Paths.get(UPLOAD_DIR, fileName);
