@@ -26,7 +26,7 @@ public class MailerManager {
 
 
         try {
-            message.setSubject("Prueba de correo");
+            message.setSubject("Código de confirmación");
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
             helper.setTo(email);
 
