@@ -22,10 +22,11 @@ public class UpdatePassword {
 
     @PutMapping
     public ResponseEntity<UpdatePasswordResponse> updatePassword(@RequestBody com.unevento.api.domain.records.UpdatePassword updatePassword) {
-        Usuario user = userRepository.getById(updatePassword.id());
+
+        Usuario user = (Usuario) userRepository.findByCorreo(updatePassword.correo());
         String encodedPassword = passwordEncoder.encode(updatePassword.newPassword());
         user.setPassword(encodedPassword);
         userRepository.save(user);
-        return ResponseEntity.ok(new UpdatePasswordResponse(user.getIdUsuario()));
+        return ResponseEntity.ok(new UpdatePasswordResponse(user.getCorreo(), user.getPassword()));
     }
 }

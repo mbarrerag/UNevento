@@ -1,4 +1,4 @@
 package com.unevento.api.domain.records;
 
-public record UpdatePassword(Long id, String newPassword) {
+public record UpdatePassword(String correo, String newPassword) {
 }
