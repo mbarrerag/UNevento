@@ -26,6 +26,7 @@ public class DeletedEvent {
         Eventos event = eventRepository.getById(id);
         event.getAsistentes().forEach(asistente -> asistenteRepository.delete(asistente));
         eventRepository.delete(event);
+        
         return ResponseEntity.noContent().build();
     }
 }

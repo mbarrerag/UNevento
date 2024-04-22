@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.LocalDate;
 
 @RestController
 @CrossOrigin
@@ -28,8 +33,10 @@ public class GetEventsNoOficial {
     }
 
     @GetMapping
-    public ResponseEntity<Page<GetAllEvenets>> getEvents(@PageableDefault(size = 2) Pageable pageable, HttpServletRequest request) {
-        Page<GetAllEvenets> events = eventRepository.findByTipo(Tipo.OFICIAL, pageable)
+    public ResponseEntity<Page<GetAllEvenets>> getEvents(@PageableDefault Pageable pageable, HttpServletRequest request) {
+        LocalDateTime startOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
+        Timestamp currentDate = Timestamp.valueOf(startOfDay);
+        Page<GetAllEvenets> events = eventRepository.findByTipoAndFechaAfterOrEqual(Tipo.NO_OFICIAL, currentDate, pageable)
                 .map(evento -> {
                     String imageUrl = imageService.getImageName(evento.getImagen_path()); // Get image URI
                     return new GetAllEvenets(evento, imageUrl);
