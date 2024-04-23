@@ -40,9 +40,15 @@ public class DeletedUser {
             userRepository.delete(user);
 
             // Delete profile picture file
-            String imageName = user.getImagen_path();
-            if (imageName != null && !imageName.isEmpty()) {
-                FileDeletedService.deleteFile(imageService.getImageName(imageName));
+            String image = imageService.getImageName(user.getImagen_path());
+            if (!image.equals("EventoNoOficial.JPG") &&
+                    !image.equals("EventoNoOficial.JPG")) {
+
+                try {
+                    FileDeletedService.deleteFile(image);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             return ResponseEntity.noContent().build();

@@ -43,14 +43,17 @@ public class UpdateUser {
             usuario.setNombre(dataUser.nombre());
             usuario.setApellido(dataUser.apellido());
 
-            String profilePicturePath;
+            String profilePicturePath = usuario.getImagen_path();
+            String image = imageService.getImageName(profilePicturePath);
             if (file == null || file.isEmpty()) {
                 // If no file is provided or the file is empty, keep the existing profile picture path
                 profilePicturePath = usuario.getImagen_path();
             } else {
-                // Use FileUploadService to handle file upload and get the path
-                FileDeletedService.deleteFile(imageService.getImageName(usuario.getImagen_path()));
-                profilePicturePath = FileUploadService.uploadFile(file);
+                if (!image.equals("UserPhoto.JPG")) {
+                    // Use FileUploadService to handle file upload and get the path
+                    FileDeletedService.deleteFile(image);
+                    profilePicturePath = FileUploadService.uploadFile(file);
+                }
             }
             usuario.setImagen_path(profilePicturePath);
             // Guardar la entidad actualizada en la base de datos
