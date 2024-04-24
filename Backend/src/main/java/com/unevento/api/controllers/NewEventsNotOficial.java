@@ -40,7 +40,7 @@ public class NewEventsNotOficial {
             String imagePath;
             if (file == null || file.isEmpty()) {
                 // If no file is provided or the file is empty, assign a default image path
-                imagePath = "Backend\\src\\main\\resources\\images\\EventoOficial.JPG"; // Replace with your default image path
+                imagePath = "EventoOficial.JPG"; // Replace with your default image path
             } else {
                 // Use FileUploadService to handle file upload and get the path
                 imagePath = fileUploadService.uploadFile(file);

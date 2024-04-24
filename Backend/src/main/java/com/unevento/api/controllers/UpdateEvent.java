@@ -55,11 +55,11 @@ public class UpdateEvent {
                 String oldImagePath = eventos.getImagen_path();
                 String image = imageService.getImageName(oldImagePath);
 
-                if (!image.equals("EventoNoOficial.JPG") &&
+                /*if (!image.equals("EventoNoOficial.JPG") &&
                         !image.equals("EventosPhoto.JPG")) {
 
                     FileDeletedService.deleteFile(imageService.getImageName(oldImagePath));
-                }
+                }*/
 
                 imageUrl = FileUploadService.uploadFile(file); // Upload the new image and get the path
             } else {
