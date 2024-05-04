@@ -17,9 +17,18 @@ import java.util.UUID;
 @Service
 public class FileService {
 
-    private final String bucketName = "uneventophoto.appspot.com";
-    private final String pathToDownloadedJson = "Backend/src/main/resources/keys/uneventophoto-firebase-adminsdk-hmao9-efc957e87b.json";
-    private final String DOWNLOAD_URL_TEMPLATE = "https://firebasestorage.googleapis.com/v0/b/%s/o/%s?alt=media";
+    private static final String bucketName = "uneventophoto.appspot.com";
+    private static final String DOWNLOAD_URL_TEMPLATE = "https://firebasestorage.googleapis.com/v0/b/%s/o/%s?alt=media";
+    private static final String pathToDownloadedJson = "Backend/src/main/resources/keys/uneventophoto-firebase-adminsdk-hmao9-efc957e87b.json";
+
+    private static String uploadFile(File file, String fileName) throws IOException {
+        BlobId blobId = BlobId.of(bucketName, fileName);
+        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("media").build();
+        Credentials credentials = GoogleCredentials.fromStream(new FileInputStream(pathToDownloadedJson));
+        Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
+        storage.create(blobInfo, Files.readAllBytes(file.toPath()));
+        return fileName;
+    }
 
     public String upload(MultipartFile multipartFile) throws IOException {
         try {
@@ -46,15 +55,6 @@ public class FileService {
             e.printStackTrace();
             throw new RuntimeException("Failed to download file.");
         }
-    }
-
-    private String uploadFile(File file, String fileName) throws IOException {
-        BlobId blobId = BlobId.of(bucketName, fileName);
-        BlobInfo blobInfo = BlobInfo.newBuilder(blobId).setContentType("media").build();
-        Credentials credentials = GoogleCredentials.fromStream(new FileInputStream(pathToDownloadedJson));
-        Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
-        storage.create(blobInfo, Files.readAllBytes(file.toPath()));
-        return String.format(DOWNLOAD_URL_TEMPLATE, bucketName, fileName);
     }
 
     private File convertToFile(MultipartFile multipartFile, String fileName) throws IOException {

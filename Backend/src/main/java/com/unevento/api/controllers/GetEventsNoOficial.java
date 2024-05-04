@@ -1,6 +1,6 @@
 package com.unevento.api.controllers;
 
-import com.unevento.api.controllers.services.ImageService;
+import com.unevento.api.controllers.services.FileService;
 import com.unevento.api.domain.modelo.Tipo;
 import com.unevento.api.domain.records.GetAllEvenets;
 import com.unevento.api.domain.repository.EventRepository;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.LocalDate;
 
 @RestController
 @CrossOrigin
@@ -25,11 +25,11 @@ import java.time.LocalDate;
 public class GetEventsNoOficial {
 
     private final EventRepository eventRepository;
-    private final ImageService imageService;
+    private final FileService fileService;
 
-    public GetEventsNoOficial(EventRepository eventRepository, ImageService imageService) {
+    public GetEventsNoOficial(EventRepository eventRepository, FileService fileService) {
         this.eventRepository = eventRepository;
-        this.imageService = imageService;
+        this.fileService = fileService;
     }
 
     @GetMapping
@@ -38,7 +38,7 @@ public class GetEventsNoOficial {
         Timestamp currentDate = Timestamp.valueOf(startOfDay);
         Page<GetAllEvenets> events = eventRepository.findByTipoAndFechaAfterOrEqual(Tipo.NO_OFICIAL, currentDate, pageable)
                 .map(evento -> {
-                    String imageUrl = imageService.getImageName(evento.getImagen_path()); // Get image URI
+                    String imageUrl = evento.getImagen_path(); // Get image URI
                     return new GetAllEvenets(evento, imageUrl);
                 });
         return ResponseEntity.ok(events);

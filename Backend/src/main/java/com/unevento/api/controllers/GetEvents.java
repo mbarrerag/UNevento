@@ -1,6 +1,6 @@
 package com.unevento.api.controllers;
 
-import com.unevento.api.controllers.services.ImageService;
+import com.unevento.api.controllers.services.FileService;
 import com.unevento.api.domain.modelo.Tipo;
 import com.unevento.api.domain.records.GetAllEvenets;
 import com.unevento.api.domain.repository.EventRepository;
@@ -20,18 +20,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class GetEvents {
 
     private final EventRepository eventRepository;
-    private final ImageService imageService;
+    private final FileService fileService;
 
-    public GetEvents(EventRepository eventRepository, ImageService imageService) {
+    public GetEvents(EventRepository eventRepository, FileService fileService) {
         this.eventRepository = eventRepository;
-        this.imageService = imageService;
+
+        this.fileService = fileService;
     }
 
     @GetMapping
     public ResponseEntity<Page<GetAllEvenets>> getEvents(@PageableDefault(size = 2) Pageable pageable, HttpServletRequest request) {
         Page<GetAllEvenets> events = eventRepository.findByTipo(Tipo.NO_OFICIAL, pageable)
                 .map(evento -> {
-                    String imageUrl = imageService.getImageName(evento.getImagen_path()); // Get image URI
+                    String imageUrl = evento.getImagen_path();
                     return new GetAllEvenets(evento, imageUrl);
                 });
         return ResponseEntity.ok(events);

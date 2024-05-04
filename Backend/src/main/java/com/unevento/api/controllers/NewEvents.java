@@ -2,7 +2,6 @@ package com.unevento.api.controllers;
 
 import com.unevento.api.controllers.services.FileDeletedService;
 import com.unevento.api.controllers.services.FileService;
-import com.unevento.api.controllers.services.FileUploadService;
 import com.unevento.api.domain.modelo.Eventos;
 import com.unevento.api.domain.modelo.Usuario;
 import com.unevento.api.domain.records.NewEvent;
@@ -28,15 +27,12 @@ public class NewEvents {
     private final UserRepository userRepository;
     private final com.unevento.api.controllers.services.FileDeletedService fileDeletedService;
 
-    private final com.unevento.api.controllers.services.FileUploadService fileUploadService;
 
     private final FileService fileService;
 
-    public NewEvents(EventRepository eventRepository, UserRepository userRepository, FileUploadService fileUploadService, FileDeletedService fileDeletedService1, FileService fileService) {
+    public NewEvents(EventRepository eventRepository, UserRepository userRepository, FileDeletedService fileDeletedService1, FileService fileService) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
-
-        this.fileUploadService = fileUploadService;
         this.fileDeletedService = fileDeletedService1;
         this.fileService = fileService;
     }

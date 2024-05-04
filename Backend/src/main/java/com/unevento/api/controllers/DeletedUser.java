@@ -2,7 +2,7 @@ package com.unevento.api.controllers;
 
 
 import com.unevento.api.controllers.services.FileDeletedService;
-import com.unevento.api.controllers.services.ImageService;
+import com.unevento.api.controllers.services.FileService;
 import com.unevento.api.domain.modelo.Usuario;
 import com.unevento.api.domain.repository.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -20,13 +20,11 @@ public class DeletedUser {
 
 
     private final UserRepository userRepository;
-    private final FileDeletedService fileDeletedService;
-    private final ImageService imageService;
+    private final FileService fileService;
 
-    public DeletedUser(UserRepository userRepository, FileDeletedService fileDeletedService, ImageService imageService) {
+    public DeletedUser(UserRepository userRepository, FileService fileService) {
         this.userRepository = userRepository;
-        this.fileDeletedService = fileDeletedService;
-        this.imageService = imageService;
+        this.fileService = fileService;
     }
 
     @DeleteMapping
@@ -40,7 +38,7 @@ public class DeletedUser {
             userRepository.delete(user);
 
             // Delete profile picture file
-            String image = imageService.getImageName(user.getImagen_path());
+            String image = user.getImagen_path();
             if (!image.equals("EventoNoOficial.JPG") &&
                     !image.equals("EventoNoOficial.JPG")) {
 

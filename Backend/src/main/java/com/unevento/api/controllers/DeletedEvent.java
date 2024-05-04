@@ -1,7 +1,6 @@
 package com.unevento.api.controllers;
 
 import com.unevento.api.controllers.services.FileDeletedService;
-import com.unevento.api.controllers.services.ImageService;
 import com.unevento.api.domain.modelo.Eventos;
 import com.unevento.api.domain.repository.AsistentRepository;
 import com.unevento.api.domain.repository.EventRepository;
@@ -17,14 +16,13 @@ import java.io.IOException;
 @RequestMapping("/deletedevent/{id}")
 public class DeletedEvent {
 
-    private final ImageService imageService;
     private final EventRepository eventRepository;
     private final AsistentRepository asistenteRepository;
     private final FileDeletedService FileDeletedService;
 
 
-    public DeletedEvent(ImageService imageService, EventRepository eventRepository, AsistentRepository asistenteRepository, com.unevento.api.controllers.services.FileDeletedService fileDeletedService) {
-        this.imageService = imageService;
+    public DeletedEvent(EventRepository eventRepository, AsistentRepository asistenteRepository, com.unevento.api.controllers.services.FileDeletedService fileDeletedService) {
+
         this.eventRepository = eventRepository;
         this.asistenteRepository = asistenteRepository;
         FileDeletedService = fileDeletedService;
@@ -36,17 +34,18 @@ public class DeletedEvent {
         event.getAsistentes().forEach(asistente -> asistenteRepository.delete(asistente));
         eventRepository.delete(event);
         String oldImagePath = event.getImagen_path();
-        String image = imageService.getImageName(oldImagePath);
-
-        if (!image.equals("EventoNoOficial.JPG") &&
-                !image.equals("EventoNoOficial.JPG")) {
-
-            try {
-                FileDeletedService.deleteFile(image);
-            } catch (IOException e) {
                 e.printStackTrace();
-            }
-        }
+//        String image = imageService.getImageName(oldImagePath);
+//
+//        if (!image.equals("EventoNoOficial.JPG") &&
+//                !image.equals("EventoNoOficial.JPG")) {
+//
+//            try {
+//                FileDeletedService.deleteFile(image);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
         return ResponseEntity.noContent().build();
     }
 }

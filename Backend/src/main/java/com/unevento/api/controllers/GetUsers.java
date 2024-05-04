@@ -1,7 +1,7 @@
 package com.unevento.api.controllers;
 
 
-import com.unevento.api.controllers.services.ImageService;
+import com.unevento.api.controllers.services.FileService;
 import com.unevento.api.domain.records.GetAllUsers;
 import com.unevento.api.domain.repository.UserRepository;
 import org.springframework.data.domain.Page;
@@ -19,17 +19,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class GetUsers {
 
     private final UserRepository userRepository;
-    private final ImageService imageService;
+    private final FileService fileService;
 
-    public GetUsers(UserRepository userRepository, ImageService imageService) {
+    public GetUsers(UserRepository userRepository, FileService fileService, FileService fileService1) {
         this.userRepository = userRepository;
-        this.imageService = imageService;
+        this.fileService = fileService1;
+
     }
 
     @GetMapping
     public ResponseEntity<Page<GetAllUsers>> getUsers(@PageableDefault(size = 2) Pageable pageable) {
         Page<GetAllUsers> users = userRepository.findAll(pageable).map(user -> {
-            String imageUrl = imageService.getImageName((user.getImagen_path())); // Get image URL
+            String imageUrl = user.getImagen_path(); // Get image URL
             return new GetAllUsers(user, imageUrl);
         });
         return ResponseEntity.ok(users);

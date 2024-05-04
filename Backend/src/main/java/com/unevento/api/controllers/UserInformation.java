@@ -1,6 +1,6 @@
 package com.unevento.api.controllers;
 
-import com.unevento.api.controllers.services.ImageService;
+import com.unevento.api.controllers.services.FileService;
 import com.unevento.api.domain.modelo.Usuario;
 import com.unevento.api.domain.records.GetInformation;
 import com.unevento.api.domain.repository.UserRepository;
@@ -16,12 +16,13 @@ public class UserInformation {
 
     private final UserRepository userRepository;
     private final VerificationTokenService tokenService;
-    private final ImageService imageService;
+    private final FileService fileService;
 
-    public UserInformation(UserRepository userRepository, VerificationTokenService tokenService, ImageService imageService) {
+    public UserInformation(UserRepository userRepository, VerificationTokenService tokenService, FileService fileService) {
         this.userRepository = userRepository;
         this.tokenService = tokenService;
-        this.imageService = imageService;
+        this.fileService = fileService;
+
     }
 
 
@@ -31,7 +32,7 @@ public class UserInformation {
             Usuario user = (Usuario) userRepository.findByCorreo(getInformation.email());
             String imageUrl = "as.png"; // Default image URL
             if (user.getImagen_path() != null) {
-                imageUrl = imageService.getImageName(user.getImagen_path()); // Get image URL
+                imageUrl = user.getImagen_path(); // Get image URL
             }
             return ResponseEntity.ok(new com.unevento.api.domain.records.UserInformation(
                     user.getIdUsuario(),
