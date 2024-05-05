@@ -1,6 +1,5 @@
 package com.unevento.api.controllers;
 
-import com.unevento.api.controllers.services.FileDeletedService;
 import com.unevento.api.domain.modelo.Eventos;
 import com.unevento.api.domain.repository.AsistentRepository;
 import com.unevento.api.domain.repository.EventRepository;
@@ -18,14 +17,12 @@ public class DeletedEvent {
 
     private final EventRepository eventRepository;
     private final AsistentRepository asistenteRepository;
-    private final FileDeletedService FileDeletedService;
 
 
-    public DeletedEvent(EventRepository eventRepository, AsistentRepository asistenteRepository, com.unevento.api.controllers.services.FileDeletedService fileDeletedService) {
+    public DeletedEvent(EventRepository eventRepository, AsistentRepository asistenteRepository) {
 
         this.eventRepository = eventRepository;
         this.asistenteRepository = asistenteRepository;
-        FileDeletedService = fileDeletedService;
     }
 
     @DeleteMapping
@@ -34,7 +31,6 @@ public class DeletedEvent {
         event.getAsistentes().forEach(asistente -> asistenteRepository.delete(asistente));
         eventRepository.delete(event);
         String oldImagePath = event.getImagen_path();
-                e.printStackTrace();
 //        String image = imageService.getImageName(oldImagePath);
 //
 //        if (!image.equals("EventoNoOficial.JPG") &&

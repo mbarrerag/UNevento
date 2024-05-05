@@ -1,7 +1,6 @@
 package com.unevento.api.controllers;
 
 
-import com.unevento.api.controllers.services.FileDeletedService;
 import com.unevento.api.controllers.services.FileService;
 import com.unevento.api.domain.modelo.Usuario;
 import com.unevento.api.domain.repository.UserRepository;
@@ -39,14 +38,9 @@ public class DeletedUser {
 
             // Delete profile picture file
             String image = user.getImagen_path();
-            if (!image.equals("EventoNoOficial.JPG") &&
-                    !image.equals("EventoNoOficial.JPG")) {
-
-                try {
-                    FileDeletedService.deleteFile(image);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            if (!image.equals("UserPhoto.jpg")) {
+                System.out.println("Entre");
+                fileService.delete(user.getImagen_path());
             }
 
             return ResponseEntity.noContent().build();

@@ -1,6 +1,5 @@
 package com.unevento.api.controllers;
 
-import com.unevento.api.controllers.services.FileDeletedService;
 import com.unevento.api.controllers.services.FileService;
 import com.unevento.api.domain.modelo.Eventos;
 import com.unevento.api.domain.modelo.Usuario;
@@ -25,15 +24,13 @@ public class NewEvents {
     private static final Logger logger = Logger.getLogger(NewEvents.class.getName());
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
-    private final com.unevento.api.controllers.services.FileDeletedService fileDeletedService;
 
 
     private final FileService fileService;
 
-    public NewEvents(EventRepository eventRepository, UserRepository userRepository, FileDeletedService fileDeletedService1, FileService fileService) {
+    public NewEvents(EventRepository eventRepository, UserRepository userRepository, FileService fileService) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
-        this.fileDeletedService = fileDeletedService1;
         this.fileService = fileService;
     }
 
@@ -49,7 +46,7 @@ public class NewEvents {
             String nameimage;
             if (file == null || file.isEmpty()) {
                 // If no file is provided or the file is empty, assign a default image path
-                nameimage = "EventPhoto.JPG"; // Replace with your default image path
+                nameimage = "EventosOficial.JPG"; // Replace with your default image path
             } else {
                 // Use FileUploadService to handle file upload and get the path
                 //imagePath = fileUploadService.uploadFile(file);

@@ -40,13 +40,13 @@ public class UpdateUser {
             usuario.setNombre(dataUser.nombre());
             usuario.setApellido(dataUser.apellido());
 
-            String profilePicturePath = usuario.getImagen_path();
+            String profilePicturePath = "";
 
             if (file == null || file.isEmpty()) {
                 // If no file is provided or the file is empty, keep the existing profile picture path
                 profilePicturePath = usuario.getImagen_path();
             } else {
-
+                fileService.delete(usuario.getImagen_path());
                 profilePicturePath = fileService.upload(file);
             }
             usuario.setImagen_path(profilePicturePath);

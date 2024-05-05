@@ -2,7 +2,10 @@ package com.unevento.api.controllers.services;
 
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.storage.*;
+import com.google.cloud.storage.BlobId;
+import com.google.cloud.storage.BlobInfo;
+import com.google.cloud.storage.Storage;
+import com.google.cloud.storage.StorageOptions;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -11,7 +14,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.UUID;
 
 @Service
@@ -34,7 +36,6 @@ public class FileService {
         try {
             String fileName = multipartFile.getOriginalFilename();
             fileName = UUID.randomUUID().toString() + getExtension(fileName);
-
             File file = convertToFile(multipartFile, fileName);
             String downloadUrl = uploadFile(file, fileName);
             file.delete();
@@ -45,17 +46,26 @@ public class FileService {
         }
     }
 
-    public void download(String fileName, String destinationPath) throws IOException {
+    public void delete(String fileName) {
         try {
-            Credentials credentials = GoogleCredentials.fromStream(new FileInputStream(pathToDownloadedJson));
-            Storage storage = StorageOptions.newBuilder().setCredentials(credentials).build().getService();
-            Blob blob = storage.get(BlobId.of(bucketName, fileName));
-            blob.downloadTo(Paths.get(destinationPath));
+            // Crear una instancia de Storage
+            Storage storage = StorageOptions.getDefaultInstance().getService();
+
+            // Construir el BlobId usando el nombre del archivo y el nombre del bucket
+            BlobId blobId = BlobId.of(bucketName, fileName);
+
+            // Eliminar el archivo de Firebase Storage
+            if (storage.delete(blobId)) {
+                System.out.println("Existe");
+            } else {
+                System.out.println("No existe");
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("Failed to download file.");
+            throw new RuntimeException("Failed to delete file.");
         }
     }
+
 
     private File convertToFile(MultipartFile multipartFile, String fileName) throws IOException {
         File tempFile = new File(fileName);
