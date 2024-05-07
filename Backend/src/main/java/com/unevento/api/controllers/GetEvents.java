@@ -1,6 +1,7 @@
 package com.unevento.api.controllers;
 
 import com.unevento.api.controllers.services.FileService;
+import com.unevento.api.domain.modelo.Facultades;
 import com.unevento.api.domain.modelo.Tipo;
 import com.unevento.api.domain.records.GetAllEvenets;
 import com.unevento.api.domain.repository.EventRepository;
@@ -9,14 +10,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/home")
+@RequestMapping("/home/{faculties}")
 public class GetEvents {
 
     private final EventRepository eventRepository;
@@ -29,8 +27,8 @@ public class GetEvents {
     }
 
     @GetMapping
-    public ResponseEntity<Page<GetAllEvenets>> getEvents(@PageableDefault(size = 2) Pageable pageable, HttpServletRequest request) {
-        Page<GetAllEvenets> events = eventRepository.findByTipo(Tipo.NO_OFICIAL, pageable)
+    public ResponseEntity<Page<GetAllEvenets>> getEvents(@PathVariable Facultades faculties, @PageableDefault(size = 1) Pageable pageable, HttpServletRequest request) {
+        Page<GetAllEvenets> events = eventRepository.findByFacultadAndTipo(faculties, Tipo.NO_OFICIAL, pageable)
                 .map(evento -> {
                     String imageUrl = evento.getImagen_path();
                     return new GetAllEvenets(evento, imageUrl);
