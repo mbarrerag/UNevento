@@ -45,16 +45,8 @@ public class UpdateEvent {
             String imageUrl = null;
 
             if (file != null && !file.isEmpty()) {
-                // If a new file is provided, delete the old one and upload the new one
-
-
-                /*if (!image.equals("EventoNoOficial.JPG") &&
-                        !image.equals("EventosPhoto.JPG")) {
-
-                    FileDeletedService.deleteFile(imageService.getImageName(oldImagePath));
-                }*/
-
-                fileService.upload(file);
+                
+                imageUrl = fileService.upload(file);
             } else {
                 // If no new file is provided, keep the existing image path
                 imageUrl = eventos.getImagen_path();
