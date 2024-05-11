@@ -33,6 +33,7 @@ public class SecurityConfiguration {
                 .permitAll().requestMatchers("/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/newuser").permitAll()
                 .requestMatchers(HttpMethod.POST, "/sendCode").permitAll()
+                .requestMatchers(HttpMethod.POST, "/create-preference").permitAll()
                 .requestMatchers(HttpMethod.GET, "/home").permitAll()
                 .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
