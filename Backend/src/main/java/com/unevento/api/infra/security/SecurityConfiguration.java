@@ -35,6 +35,7 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.POST, "/sendCode").permitAll()
                 .requestMatchers(HttpMethod.POST, "/create-preference").permitAll()
                 .requestMatchers(HttpMethod.GET, "/home").permitAll()
+                .requestMatchers(HttpMethod.GET, "/home/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/updatepassword").permitAll()

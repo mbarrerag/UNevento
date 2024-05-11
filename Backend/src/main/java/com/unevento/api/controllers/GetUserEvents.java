@@ -1,6 +1,5 @@
 package com.unevento.api.controllers;
 
-import com.unevento.api.controllers.services.ImageService;
 import com.unevento.api.domain.modelo.Usuario;
 import com.unevento.api.domain.records.GetAllUserEvents;
 import com.unevento.api.domain.repository.EventRepository;
@@ -17,12 +16,10 @@ import org.springframework.web.bind.annotation.*;
 public class GetUserEvents {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
-    private final ImageService imageService;
 
-    public GetUserEvents(EventRepository eventRepository, UserRepository userRepository, ImageService imageService) {
+    public GetUserEvents(EventRepository eventRepository, UserRepository userRepository) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
-        this.imageService = imageService;
     }
 
 
@@ -31,8 +28,8 @@ public class GetUserEvents {
         Usuario usuario = userRepository.getById(id);
         Page<GetAllUserEvents> events = eventRepository.findByUsuarioCreador(usuario, pageable)
                 .map(evento -> {
-                    
-                    String imageUrl = imageService.getImageName(evento.getImagen_path()); // Get image URI
+
+                    String imageUrl = evento.getImagen_path(); // Get image URI
                     return new GetAllUserEvents(evento, imageUrl);
                 });
 

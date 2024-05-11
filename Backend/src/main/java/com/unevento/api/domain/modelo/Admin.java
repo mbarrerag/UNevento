@@ -16,7 +16,7 @@ import lombok.Getter;
 public class Admin {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
-    private Long id_admin;
+    private Long id;
     @NotBlank
     private String correo;
     @NotBlank
@@ -28,11 +28,11 @@ public class Admin {
 
     }
 
-    public void setId(Long id) {
-        this.id_admin = id;
+    public Long getId() {
+        return id;
     }
 
-    public Long getId() {
-        return id_admin;
+    public void setId(Long id) {
+        this.id = id;
     }
 }

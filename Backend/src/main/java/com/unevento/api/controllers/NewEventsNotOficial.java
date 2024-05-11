@@ -1,6 +1,6 @@
 package com.unevento.api.controllers;
 
-import com.unevento.api.controllers.services.FileUploadService;
+import com.unevento.api.controllers.services.FileService;
 import com.unevento.api.domain.modelo.Eventos;
 import com.unevento.api.domain.modelo.Usuario;
 import com.unevento.api.domain.records.NewEvent;
@@ -23,12 +23,12 @@ public class NewEventsNotOficial {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
 
-    private final FileUploadService fileUploadService;
+    private final FileService fileService;
 
-    public NewEventsNotOficial(EventRepository eventRepository, UserRepository userRepository, FileUploadService fileUploadService) {
+    public NewEventsNotOficial(EventRepository eventRepository, UserRepository userRepository, FileService fileService) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
-        this.fileUploadService = fileUploadService;
+        this.fileService = fileService;
     }
 
 
@@ -40,10 +40,10 @@ public class NewEventsNotOficial {
             String imagePath;
             if (file == null || file.isEmpty()) {
                 // If no file is provided or the file is empty, assign a default image path
-                imagePath = "EventoNoOficial.JPG"; // Replace with your default image path
+                imagePath = "EventosNoOficial.JPG"; // Replace with your default image path
             } else {
                 // Use FileUploadService to handle file upload and get the path
-                imagePath = fileUploadService.uploadFile(file);
+                imagePath = fileService.upload(file);
             }
 
             eventos = eventRepository.save(new Eventos(newEvent, user, imagePath));

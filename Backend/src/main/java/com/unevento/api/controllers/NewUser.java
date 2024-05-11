@@ -28,7 +28,7 @@ public class NewUser {
         String encodedPassword = passwordEncoder.encode(dataUser.contrasena());
         Usuario user = new Usuario(dataUser);
         user.setPassword(encodedPassword);
-        user.setImagen_path("Backend\\src\\main\\resources\\images\\UserPhoto.jpg");
+        user.setImagen_path("UserPhoto.jpg");
         user = userRepository.save(user);
         UpdateAnswerDataUser answer = new UpdateAnswerDataUser(user.getIdUsuario(), user.getCorreo(), user.getNombre(), user.getApellido(), user.getImagen_path());
         URI uri = uriBuilder.path("/getuser/{id}").buildAndExpand(user.getIdUsuario()).toUri();

@@ -1,8 +1,6 @@
 package com.unevento.api.controllers;
 
-import com.unevento.api.controllers.services.FileDeletedService;
-import com.unevento.api.controllers.services.FileUploadService;
-import com.unevento.api.controllers.services.ImageService;
+import com.unevento.api.controllers.services.FileService;
 import com.unevento.api.domain.modelo.Usuario;
 import com.unevento.api.domain.records.UpdateAnswerDataUser;
 import com.unevento.api.domain.repository.UserRepository;
@@ -21,15 +19,14 @@ import java.io.IOException;
 public class UpdateUser {
 
     public final UserRepository userRepository;
-    private final FileUploadService fileUploadService;
-    private final FileDeletedService fileDeletedService;
-    private final ImageService imageService;
 
-    public UpdateUser(UserRepository userRepository, FileUploadService fileUploadService, FileDeletedService fileDeletedService, ImageService imageService) {
+    private final FileService fileService;
+
+
+    public UpdateUser(UserRepository userRepository, FileService fileService) {
         this.userRepository = userRepository;
-        this.fileUploadService = fileUploadService;
-        this.fileDeletedService = fileDeletedService;
-        this.imageService = imageService;
+        this.fileService = fileService;
+
     }
 
 
@@ -43,17 +40,14 @@ public class UpdateUser {
             usuario.setNombre(dataUser.nombre());
             usuario.setApellido(dataUser.apellido());
 
-            String profilePicturePath = usuario.getImagen_path();
-            String image = imageService.getImageName(profilePicturePath);
+            String profilePicturePath = "";
+
             if (file == null || file.isEmpty()) {
                 // If no file is provided or the file is empty, keep the existing profile picture path
                 profilePicturePath = usuario.getImagen_path();
             } else {
-                if (!image.equals("UserPhoto.JPG")) {
-                    // Use FileUploadService to handle file upload and get the path
-                    FileDeletedService.deleteFile(image);
-                    profilePicturePath = FileUploadService.uploadFile(file);
-                }
+                fileService.delete(usuario.getImagen_path());
+                profilePicturePath = fileService.upload(file);
             }
             usuario.setImagen_path(profilePicturePath);
             // Guardar la entidad actualizada en la base de datos

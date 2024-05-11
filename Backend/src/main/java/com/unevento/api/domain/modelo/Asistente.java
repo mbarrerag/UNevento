@@ -20,6 +20,7 @@ public class Asistente {
     @ManyToOne
     @JoinColumn(name = "evento_id")
     private Eventos evento;
+
     @ManyToOne
     @JoinColumn(name = "ID_USUARIO_EVENTO")  // Ajustar aquí
     private Usuario usuario;

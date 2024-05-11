@@ -1,8 +1,6 @@
 package com.unevento.api.controllers;
 
-import com.unevento.api.controllers.services.FileDeletedService;
-import com.unevento.api.controllers.services.FileUploadService;
-import com.unevento.api.controllers.services.ImageService;
+import com.unevento.api.controllers.services.FileService;
 import com.unevento.api.domain.modelo.Categorias;
 import com.unevento.api.domain.modelo.Eventos;
 import com.unevento.api.domain.modelo.Facultades;
@@ -21,16 +19,12 @@ import org.springframework.web.multipart.MultipartFile;
 public class UpdateEvent {
 
     private final EventRepository eventRepository;
-    private final com.unevento.api.controllers.services.FileUploadService fileUploadService;
-    private final ImageService imageService;
 
-    private final FileDeletedService fileDeletedService;
+    private final FileService fileService;
 
-    public UpdateEvent(EventRepository eventRepository, FileUploadService fileUploadService, ImageService imageService, FileDeletedService fileDeletedService) {
+    public UpdateEvent(EventRepository eventRepository, FileService fileService) {
         this.eventRepository = eventRepository;
-        this.fileUploadService = fileUploadService;
-        this.imageService = imageService;
-        this.fileDeletedService = fileDeletedService;
+        this.fileService = fileService;
     }
 
     @Transactional
@@ -51,17 +45,8 @@ public class UpdateEvent {
             String imageUrl = null;
 
             if (file != null && !file.isEmpty()) {
-                // If a new file is provided, delete the old one and upload the new one
-                String oldImagePath = eventos.getImagen_path();
-                String image = imageService.getImageName(oldImagePath);
-
-                /*if (!image.equals("EventoNoOficial.JPG") &&
-                        !image.equals("EventosPhoto.JPG")) {
-
-                    FileDeletedService.deleteFile(imageService.getImageName(oldImagePath));
-                }*/
-
-                imageUrl = FileUploadService.uploadFile(file); // Upload the new image and get the path
+                
+                imageUrl = fileService.upload(file);
             } else {
                 // If no new file is provided, keep the existing image path
                 imageUrl = eventos.getImagen_path();
