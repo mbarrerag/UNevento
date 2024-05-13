@@ -27,7 +27,7 @@ public class ValidationAssistEvent {
     }
 
 
-    @GetMapping
+    @PostMapping
     public ResponseEntity<com.unevento.api.domain.records.AnswerAssistEvent> ValidationAssistance(@RequestBody com.unevento.api.domain.records.ValidationAssistEvent validationAssistEvent) {
         Usuario usuario = userRepository.getById(validationAssistEvent.idUsuario());
         Eventos eventos = eventRepository.findByIdevento(validationAssistEvent.idEvento());
