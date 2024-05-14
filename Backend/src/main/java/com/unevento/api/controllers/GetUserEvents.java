@@ -24,7 +24,7 @@ public class GetUserEvents {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Page<GetAllUserEvents>> getUserEvents(@PageableDefault Pageable pageable, @PathVariable Long id) {
+    public ResponseEntity<Page<GetAllUserEvents>> getUserEvents(@PageableDefault (size = 10) Pageable pageable, @PathVariable Long id) {
         Usuario usuario = userRepository.getById(id);
         Page<GetAllUserEvents> events = eventRepository.findByUsuarioCreador(usuario, pageable)
                 .map(evento -> {

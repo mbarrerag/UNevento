@@ -33,7 +33,7 @@ public class GetEventsNoOficial {
     }
 
     @GetMapping
-    public ResponseEntity<Page<GetAllEvenets>> getEvents(@PageableDefault Pageable pageable, HttpServletRequest request) {
+    public ResponseEntity<Page<GetAllEvenets>> getEvents(@PageableDefault (size = 10) Pageable pageable, HttpServletRequest request) {
         LocalDateTime startOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
         Timestamp currentDate = Timestamp.valueOf(startOfDay);
         Page<GetAllEvenets> events = eventRepository.findByTipoAndFechaAfterOrEqual(Tipo.NO_OFICIAL, currentDate, pageable)
