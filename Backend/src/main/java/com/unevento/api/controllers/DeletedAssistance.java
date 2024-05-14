@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/deletedassistance")
+@CrossOrigin
 public class DeletedAssistance {
 
     private final AsistentRepository asistentRepository;
@@ -27,7 +28,7 @@ public class DeletedAssistance {
         this.boletoRepository = boletoRepository;
     }
 
-    @PostMapping
+    /*@PostMapping
     public ResponseEntity<Object> annulAssistance(@RequestBody com.unevento.api.domain.records.DeletedAssistance deletedAssistance) {
 
         Usuario usuario = userRepository.findByIdUsuario(deletedAssistance.idusuario());
@@ -40,9 +41,9 @@ public class DeletedAssistance {
             System.out.println(e);
         }
         return ResponseEntity.noContent().build();
-    }
+    }*/
 
-    @DeleteMapping
+    @PostMapping
     public ResponseEntity<Void> deleteAssistance(@RequestBody com.unevento.api.domain.records.DeletedAssistance deletedAssistance) {
         Usuario usuario = userRepository.findByIdUsuario(deletedAssistance.idusuario());
         Eventos eventos = eventRepository.findByIdevento(deletedAssistance.eventoid());
