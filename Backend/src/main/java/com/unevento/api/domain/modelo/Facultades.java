@@ -12,6 +12,12 @@ public enum Facultades {
     Facultad_De_Veterinaria,
     Facultad_De_Derecho,
     Facultad_De_Artes,
+    Bienestar,
+    Relaciones_Internacionales,
+    Idiomas,
+
+    Leon_De_Greiff,
+
     No_Aplica
 
 

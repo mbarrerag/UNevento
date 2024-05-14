@@ -27,10 +27,11 @@ public class GetEvents {
     }
 
     @GetMapping
-    public ResponseEntity<Page<GetAllEvenets>> getEvents(@PathVariable Facultades faculties, @PageableDefault(size = 1) Pageable pageable, HttpServletRequest request) {
-        Page<GetAllEvenets> events = eventRepository.findByFacultadAndTipo(faculties, Tipo.NO_OFICIAL, pageable)
+    public ResponseEntity<Page<GetAllEvenets>> getEvents(@PathVariable Facultades faculties, @PageableDefault Pageable pageable, HttpServletRequest request) {
+        Page<GetAllEvenets> events = eventRepository.findByFacultadAndTipo(faculties, Tipo.OFICIAL, pageable)
                 .map(evento -> {
                     String imageUrl = evento.getImagen_path();
+                    System.out.println("Entresss");
                     return new GetAllEvenets(evento, imageUrl);
                 });
         return ResponseEntity.ok(events);
