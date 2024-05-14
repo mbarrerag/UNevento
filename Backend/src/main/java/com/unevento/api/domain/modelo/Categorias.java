@@ -15,6 +15,8 @@ public enum Categorias {
         Networking,
         Actvidad_Cultural,
         Actividad_Deportiva,
+        Actividad_LudicoCreativa,
+        Actividad_Departamento,
         Proyeccion_de_peliculas,
         Religioso_y_Espiritual,
         Otro
