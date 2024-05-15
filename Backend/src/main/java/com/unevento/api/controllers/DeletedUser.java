@@ -40,7 +40,7 @@ public class DeletedUser {
             String image = user.getImagen_path();
             if (!image.equals("UserPhoto.jpg")) {
                 System.out.println("Entre");
-                fileService.delete(user.getImagen_path());
+                //fileService.delete(user.getImagen_path());
             }
 
             return ResponseEntity.noContent().build();
