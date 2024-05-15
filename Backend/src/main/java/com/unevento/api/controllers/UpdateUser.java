@@ -46,7 +46,7 @@ public class UpdateUser {
                 // If no file is provided or the file is empty, keep the existing profile picture path
                 profilePicturePath = usuario.getImagen_path();
             } else {
-                fileService.delete(usuario.getImagen_path());
+               // fileService.delete(usuario.getImagen_path());
                 profilePicturePath = fileService.upload(file);
             }
             usuario.setImagen_path(profilePicturePath);
