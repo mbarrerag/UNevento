@@ -1,5 +1,6 @@
 package com.unevento.api.controllers.services;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.GoogleCredentials;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +14,8 @@ import com.google.cloud.storage.StorageOptions;
 
 import java.io.*;
 import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Service
@@ -24,12 +27,52 @@ public class FileService {
     @Value("${client_email}")
     private String clientEmail;
 
+    @Value("${project_id}")
+    private String projectId;
+
+    @Value("${private_key_id}")
+    private String privateKeyId;
+
+    @Value("${client_id}")
+    private String clientId;
+
+    @Value("${client_x509_cert_url}")
+    private String clientX509CertUrl;
+
+    @Value("${auth_provider_x509_cert_url}")
+    private String authProviderX509CertUrl;
+
+    @Value("${auth_uri}")
+    private String authUri;
+
+    @Value("${token_uri}")
+    private String tokenUri;
+
     private static final String bucketName = "uneventophoto.appspot.com";
     private static final String DOWNLOAD_URL_TEMPLATE = "https://firebasestorage.googleapis.com/v0/b/%s/o/%s?alt=media";
 
-    private Credentials createCredentials() throws IOException {
-        File credentialsFile = new ClassPathResource("keys/uneventophoto-firebase-adminsdk-hmao9-efc957e87b.json").getFile();
-        return GoogleCredentials.fromStream(new FileInputStream(credentialsFile));
+    private Credentials createCredentials() {
+        try {
+            privateKey = privateKey.replace("\\n", "\n").trim();
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("type", "service_account");
+            map.put("project_id", projectId);
+            map.put("private_key_id", privateKeyId);
+            map.put("private_key", privateKey);
+            map.put("client_email", clientEmail);
+            map.put("client_id", clientId);
+            map.put("auth_uri", authUri);
+            map.put("token_uri", tokenUri);
+            map.put("auth_provider_x509_cert_url", authProviderX509CertUrl);
+            map.put("client_x509_cert_url", clientX509CertUrl);
+
+            return GoogleCredentials.fromStream(new ByteArrayInputStream(new ObjectMapper().writeValueAsBytes(map)))
+                    .createScoped("https://www.googleapis.com/auth/cloud-platform");
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to create Google credentials: " + e.getMessage());
+        }
     }
 
     private String uploadFile(File file, String fileName) throws IOException {
