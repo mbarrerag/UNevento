@@ -1,5 +1,6 @@
 package com.unevento.api.controllers;
 
+import com.unevento.api.controllers.services.BadWordsHandler.ContentFilterService;
 import com.unevento.api.domain.modelo.Usuario;
 import com.unevento.api.domain.records.UpdateAnswerDataUser;
 import com.unevento.api.domain.repository.UserRepository;
@@ -18,9 +19,13 @@ public class NewUser {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public NewUser(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    private final ContentFilterService contentFilterService;
+
+
+    public NewUser(UserRepository userRepository, PasswordEncoder passwordEncoder, ContentFilterService contentFilterService) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.contentFilterService = contentFilterService;
     }
 
     @PostMapping
@@ -29,6 +34,9 @@ public class NewUser {
         Usuario user = new Usuario(dataUser);
         user.setPassword(encodedPassword);
         user.setImagen_path("UserPhoto.jpg");
+        if (contentFilterService.containsBadWords(user.getNombre()) || contentFilterService.containsBadWords(user.getUsername())) {
+            return ResponseEntity.badRequest().body(null);
+        }
         user = userRepository.save(user);
         UpdateAnswerDataUser answer = new UpdateAnswerDataUser(user.getIdUsuario(), user.getCorreo(), user.getNombre(), user.getApellido(), user.getImagen_path());
         URI uri = uriBuilder.path("/getuser/{id}").buildAndExpand(user.getIdUsuario()).toUri();

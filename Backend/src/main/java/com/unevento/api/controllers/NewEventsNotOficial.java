@@ -1,5 +1,6 @@
 package com.unevento.api.controllers;
 
+import com.unevento.api.controllers.services.BadWordsHandler.ContentFilterService;
 import com.unevento.api.controllers.services.FileService;
 import com.unevento.api.domain.modelo.Eventos;
 import com.unevento.api.domain.modelo.Usuario;
@@ -7,6 +8,7 @@ import com.unevento.api.domain.records.NewEvent;
 import com.unevento.api.domain.records.UpdateAnswerDataEvent;
 import com.unevento.api.domain.repository.EventRepository;
 import com.unevento.api.domain.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,18 +24,25 @@ import java.net.URI;
 public class NewEventsNotOficial {
     private final EventRepository eventRepository;
     private final UserRepository userRepository;
-
     private final FileService fileService;
+    private final ContentFilterService contentFilterService;
 
-    public NewEventsNotOficial(EventRepository eventRepository, UserRepository userRepository, FileService fileService) {
+    @Autowired
+    public NewEventsNotOficial(EventRepository eventRepository, UserRepository userRepository, FileService fileService, ContentFilterService contentFilterService) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
         this.fileService = fileService;
+        this.contentFilterService = contentFilterService;
     }
-
 
     @PostMapping
     public ResponseEntity<UpdateAnswerDataEvent> creatingEvent(@RequestPart("newEvent") NewEvent newEvent, UriComponentsBuilder uriBuilder, @RequestPart(value = "file", required = false) MultipartFile file) {
+
+        // Verificar si el nombre o la descripción contienen palabras prohibidas
+        if (contentFilterService.containsBadWords(newEvent.nombre()) || contentFilterService.containsBadWords(newEvent.descripcion()) || contentFilterService.containsBadWords(newEvent.lugar())) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
         Usuario user = userRepository.getById(newEvent.userID());
         Eventos eventos;
         try {

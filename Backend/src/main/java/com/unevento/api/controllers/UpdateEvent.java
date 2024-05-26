@@ -1,5 +1,6 @@
 package com.unevento.api.controllers;
 
+import com.unevento.api.controllers.services.BadWordsHandler.ContentFilterService;
 import com.unevento.api.controllers.services.FileService;
 import com.unevento.api.domain.modelo.Categorias;
 import com.unevento.api.domain.modelo.Eventos;
@@ -22,9 +23,12 @@ public class UpdateEvent {
 
     private final FileService fileService;
 
-    public UpdateEvent(EventRepository eventRepository, FileService fileService) {
+    private final ContentFilterService contentFilterService;
+
+    public UpdateEvent(EventRepository eventRepository, FileService fileService, ContentFilterService contentFilterService) {
         this.eventRepository = eventRepository;
         this.fileService = fileService;
+        this.contentFilterService = contentFilterService;
     }
 
     @Transactional
@@ -45,7 +49,7 @@ public class UpdateEvent {
             String imageUrl = null;
 
             if (file != null && !file.isEmpty()) {
-                
+
                 imageUrl = fileService.upload(file);
             } else {
                 // If no new file is provided, keep the existing image path
@@ -54,6 +58,9 @@ public class UpdateEvent {
 
             eventos.setImagen_path(imageUrl);
 
+            if (contentFilterService.containsBadWords(eventos.getNombre()) || contentFilterService.containsBadWords(eventos.getDescripcion()) || contentFilterService.containsBadWords(eventos.getLugar())) {
+                return ResponseEntity.badRequest().body(null);
+            }
             // Guardar la entidad actualizada en la base de datos
             eventRepository.save(eventos);
 
