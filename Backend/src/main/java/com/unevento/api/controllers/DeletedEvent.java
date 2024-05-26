@@ -3,6 +3,7 @@ package com.unevento.api.controllers;
 import com.unevento.api.domain.modelo.Eventos;
 import com.unevento.api.domain.repository.AsistentRepository;
 import com.unevento.api.domain.repository.EventRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +28,11 @@ public class DeletedEvent {
 
     @DeleteMapping
     public ResponseEntity<Object> deleteEvent(@PathVariable Long id) throws IOException {
-        Eventos event = eventRepository.getById(id);
-        event.getAsistentes().forEach(asistente -> asistenteRepository.delete(asistente));
-        eventRepository.delete(event);
-        String oldImagePath = event.getImagen_path();
+        try {
+            Eventos event = eventRepository.getById(id);
+            event.getAsistentes().forEach(asistente -> asistenteRepository.delete(asistente));
+            eventRepository.delete(event);
+            String oldImagePath = event.getImagen_path();
 //        String image = imageService.getImageName(oldImagePath);
 //
 //        if (!image.equals("EventoNoOficial.JPG") &&
@@ -42,6 +44,9 @@ public class DeletedEvent {
 //                e.printStackTrace();
 //            }
 //        }
-        return ResponseEntity.noContent().build();
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException exception) {
+            return ResponseEntity.noContent().build();
+        }
     }
 }

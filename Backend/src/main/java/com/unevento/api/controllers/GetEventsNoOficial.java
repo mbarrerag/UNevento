@@ -4,6 +4,7 @@ import com.unevento.api.controllers.services.FileService;
 import com.unevento.api.domain.modelo.Tipo;
 import com.unevento.api.domain.records.GetAllEvenets;
 import com.unevento.api.domain.repository.EventRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -33,15 +34,20 @@ public class GetEventsNoOficial {
     }
 
     @GetMapping
-    public ResponseEntity<Page<GetAllEvenets>> getEvents(@PageableDefault (size = 10) Pageable pageable, HttpServletRequest request) {
-        LocalDateTime startOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
-        Timestamp currentDate = Timestamp.valueOf(startOfDay);
-        Page<GetAllEvenets> events = eventRepository.findByTipoAndFechaAfterOrEqual(Tipo.NO_OFICIAL, currentDate, pageable)
-                .map(evento -> {
-                    String imageUrl = evento.getImagen_path(); // Get image URI
-                    return new GetAllEvenets(evento, imageUrl);
-                });
-        return ResponseEntity.ok(events);
+    public ResponseEntity<Page<GetAllEvenets>> getEvents(@PageableDefault(size = 10) Pageable pageable, HttpServletRequest request) {
+
+        try {
+            LocalDateTime startOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
+            Timestamp currentDate = Timestamp.valueOf(startOfDay);
+            Page<GetAllEvenets> events = eventRepository.findByTipoAndFechaAfterOrEqual(Tipo.NO_OFICIAL, currentDate, pageable)
+                    .map(evento -> {
+                        String imageUrl = evento.getImagen_path(); // Get image URI
+                        return new GetAllEvenets(evento, imageUrl);
+                    });
+            return ResponseEntity.ok(events);
+        } catch (EntityNotFoundException ex) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
 }

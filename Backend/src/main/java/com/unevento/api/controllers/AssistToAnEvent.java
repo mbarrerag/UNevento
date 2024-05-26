@@ -9,6 +9,8 @@ import com.unevento.api.domain.repository.AsistentRepository;
 import com.unevento.api.domain.repository.BoletoRepository;
 import com.unevento.api.domain.repository.EventRepository;
 import com.unevento.api.domain.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,12 +34,16 @@ public class AssistToAnEvent {
     @PostMapping
     public void asistToAnEvent(@RequestBody AsistToEvents asistToEvents) {
 
-        Eventos eventos = eventRepository.findByIdevento(asistToEvents.eventoid());
-        Usuario usuario = userRepository.findByIdUsuario(asistToEvents.idusuario());
-        Boleto boleto = new Boleto(usuario.getNombre());
-        boleto = boletoRepository.save(boleto);
-        System.out.println("aa" + boleto.getNombre_usuario() + boleto.getId_boleto());
+        try {
+            Eventos eventos = eventRepository.findByIdevento(asistToEvents.eventoid());
+            Usuario usuario = userRepository.findByIdUsuario(asistToEvents.idusuario());
+            Boleto boleto = new Boleto(usuario.getNombre());
+            boleto = boletoRepository.save(boleto);
+            System.out.println("aa" + boleto.getNombre_usuario() + boleto.getId_boleto());
 
-        Asistente asistente = asistentRepository.save(new Asistente(asistToEvents, eventos, usuario, boleto));
+            Asistente asistente = asistentRepository.save(new Asistente(asistToEvents, eventos, usuario, boleto));
+        } catch (EntityNotFoundException exception) {
+            ResponseEntity.notFound().build();
+        }
     }
 }

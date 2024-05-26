@@ -5,6 +5,7 @@ import com.unevento.api.domain.modelo.Facultades;
 import com.unevento.api.domain.modelo.Tipo;
 import com.unevento.api.domain.records.GetAllEvenets;
 import com.unevento.api.domain.repository.EventRepository;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -28,13 +29,19 @@ public class GetEvents {
 
     @GetMapping
     public ResponseEntity<Page<GetAllEvenets>> getEvents(@PathVariable Facultades faculties, @PageableDefault Pageable pageable, HttpServletRequest request) {
-        Page<GetAllEvenets> events = eventRepository.findByFacultadAndTipo(faculties, Tipo.OFICIAL, pageable)
-                .map(evento -> {
-                    String imageUrl = evento.getImagen_path();
-                    System.out.println("Entresss");
-                    return new GetAllEvenets(evento, imageUrl);
-                });
-        return ResponseEntity.ok(events);
-    }
+        try {
 
+            Page<GetAllEvenets> events = eventRepository.findByFacultadAndTipo(faculties, Tipo.OFICIAL, pageable)
+                    .map(evento -> {
+                        String imageUrl = evento.getImagen_path();
+                        System.out.println("Entresss");
+                        return new GetAllEvenets(evento, imageUrl);
+                    });
+            return ResponseEntity.ok(events);
+
+        } catch (EntityNotFoundException ex) {
+            return ResponseEntity.notFound().build();
+        }
+
+    }
 }
