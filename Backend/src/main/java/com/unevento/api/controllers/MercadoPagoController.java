@@ -51,7 +51,7 @@ public class MercadoPagoController {
         items.add(itemRequest);
 
         PreferenceBackUrlsRequest backUrls = PreferenceBackUrlsRequest.builder()
-                .success(("https://unevento.vercel.app/home"))
+                .success(null)
                 .pending("https://unevento.vercel.app/home")
                 .failure("https://unevento.vercel.app/home")
                 .build();
@@ -62,7 +62,7 @@ public class MercadoPagoController {
                 .backUrls(backUrls)
                 .autoReturn("approved")
                 .paymentMethods(null)
-                .notificationUrl("https://uneventoback-production-3c28.up.railway.ap/payment-notification")
+                .notificationUrl("https://uneventoback-production-3c28.up.railway.ap/create-preference/payment-notification")
                 .statementDescriptor(null)
                 .externalReference(null)
                 .expires(true)
