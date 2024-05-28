@@ -38,6 +38,7 @@ public class SecurityConfiguration {
                 .requestMatchers(HttpMethod.GET, "/home/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
                 .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/create-preference/payment-notification").permitAll()
                 .requestMatchers(HttpMethod.PUT, "/updatepassword").permitAll()
                 .anyRequest()
                 .authenticated().and().addFilterBefore(SecurityFilter, UsernamePasswordAuthenticationFilter.class).build();
