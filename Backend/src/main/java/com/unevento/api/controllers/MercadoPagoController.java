@@ -28,7 +28,7 @@ public class MercadoPagoController {
     @PostMapping
     public Preference getMercadoPago(@RequestBody PreferenceData preferenceData) throws MPException, MPApiException {
 
-        MercadoPagoConfig.setAccessToken("APP_USR-6752685489995539-052809-2cb819e3eea17c451c71c27b6060b577-1815809660");
+        MercadoPagoConfig.setAccessToken("APP_USR-3054549772251715-052810-4d0e190c75da4281a1d68ca17cd8649c-1461153682");
         int id = preferenceData.id();
         String title = preferenceData.title();
         int price = preferenceData.unit_price();
