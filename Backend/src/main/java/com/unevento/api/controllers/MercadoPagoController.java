@@ -51,7 +51,7 @@ public class MercadoPagoController {
         items.add(itemRequest);
 
         PreferenceBackUrlsRequest backUrls = PreferenceBackUrlsRequest.builder()
-                .success((null))
+                .success(("https://unevento.vercel.app/home"))
                 .pending("https://unevento.vercel.app/home")
                 .failure("https://unevento.vercel.app/home")
                 .build();
