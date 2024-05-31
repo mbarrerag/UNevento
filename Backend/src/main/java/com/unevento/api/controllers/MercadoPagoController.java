@@ -62,7 +62,7 @@ public class MercadoPagoController {
                 .backUrls(backUrls)
                 .autoReturn("approved")
                 .paymentMethods(null)
-                .notificationUrl("https://uneventoback-production-3c28.up.railway.app/create-preference/payment-notification")
+                .notificationUrl("https://54e7-2800-484-db6d-a600-ed6b-1b40-56d2-85b.ngrok-free.app/notification")
                 .statementDescriptor(null)
                 .externalReference(null)
                 .expires(true)
