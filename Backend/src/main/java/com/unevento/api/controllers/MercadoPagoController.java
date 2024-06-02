@@ -1,6 +1,4 @@
 package com.unevento.api.controllers;
-
-
 import com.mercadopago.client.payment.PaymentClient;
 import com.mercadopago.client.preference.*;
 import com.mercadopago.exceptions.MPApiException;
@@ -16,9 +14,10 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-
 import com.unevento.api.domain.records.PreferenceData;
+
+
+
 
 @CrossOrigin
 @RestController
@@ -62,7 +61,7 @@ public class MercadoPagoController {
                 .backUrls(backUrls)
                 .autoReturn("approved")
                 .paymentMethods(null)
-                .notificationUrl("https://e274-2800-484-db6d-a600-ad3a-928c-21ff-a667.ngrok-free.app/notification")
+                .notificationUrl("")
                 .statementDescriptor(null)
                 .externalReference(null)
                 .expires(true)
@@ -76,44 +75,6 @@ public class MercadoPagoController {
 
 
         return preference;
-    }
-
-
-    @CrossOrigin
-    @GetMapping("/payment-status")
-    public String getPaymentStatus(@RequestParam("payment_id") Long paymentId) {
-        try {
-            PaymentClient paymentClient = new PaymentClient();
-            Payment payment = paymentClient.get(paymentId);
-
-            if (payment != null) {
-                String status = payment.getStatus();
-                System.out.println("Payment status: " + status);
-
-                if ("approved".equals(status)) {
-                    return "The transaction was successful!";
-                } else {
-                    return "The transaction was not successful. Status: " + status;
-                }
-            } else {
-                return "Payment not found.";
-            }
-        } catch (MPException | MPApiException e) {
-            e.printStackTrace();
-            return "An error occurred while retrieving the payment status.";
-        }
-    }
-
-    @CrossOrigin
-    @PostMapping("/payment-notification")
-    public ResponseEntity<String> handleNotification() {
-
-
-
-
-
-
-        return ResponseEntity.ok("LLego la notificacion de pago!");
     }
 }
 
