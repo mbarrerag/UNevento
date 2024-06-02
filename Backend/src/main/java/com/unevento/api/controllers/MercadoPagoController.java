@@ -62,7 +62,7 @@ public class MercadoPagoController {
                 .backUrls(backUrls)
                 .autoReturn("approved")
                 .paymentMethods(null)
-                .notificationUrl("https://54e7-2800-484-db6d-a600-ed6b-1b40-56d2-85b.ngrok-free.app/notification")
+                .notificationUrl("https://e274-2800-484-db6d-a600-ad3a-928c-21ff-a667.ngrok-free.app/notification")
                 .statementDescriptor(null)
                 .externalReference(null)
                 .expires(true)
