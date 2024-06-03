@@ -26,13 +26,13 @@ import com.unevento.api.domain.records.PreferenceData;
 @RequestMapping("/payment-notification")
 public class PaymentNotification {
     @GetMapping
-    public ResponseEntity<String> handleNotification(@RequestParam Map<String, String> params) {
-        String topic = params.get("topic");
-        String id = params.get("id");
+    public ResponseEntity<String> handleNotification(@RequestParam String topic, @RequestParam String id) {
+        System.out.println("Topic: " + topic);
+        System.out.println("ID: " + id);
 
         // Aquí puedes agregar la lógica para procesar la notificación recibida
-        // Por ejemplo, podrías realizar una llamada a la API de Mercado Pago para obtener detalles del pago usando el ID
 
         return ResponseEntity.ok("Llegó la notificación de pago con topic: " + topic + " e id: " + id + "!");
     }
+
 }
