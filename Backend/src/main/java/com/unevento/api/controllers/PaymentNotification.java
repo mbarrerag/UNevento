@@ -19,7 +19,7 @@ import java.util.Map;
 
 @Component
 @RestController
-@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST})
 @RequestMapping("/payment-notification")
 public class PaymentNotification {
 
@@ -31,10 +31,14 @@ public class PaymentNotification {
         MercadoPagoConfig.setAccessToken(accessToken);
     }
 
-    @GetMapping
+    @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
     public ResponseEntity<String> handleNotification(@RequestParam Map<String, String> params) {
         String topic = params.get("topic");
         String id = params.get("id");
+
+        if (topic == null || id == null) {
+            return ResponseEntity.badRequest().body("Missing topic or id");
+        }
 
         MerchantOrder merchantOrder = null;
         try {
