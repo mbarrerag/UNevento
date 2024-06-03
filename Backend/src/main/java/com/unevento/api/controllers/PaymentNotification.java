@@ -19,7 +19,7 @@ import java.util.Map;
 
 @Component
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RequestMapping("/payment-notification")
 public class PaymentNotification {
 
