@@ -42,7 +42,8 @@ public class GetEventsNoOficial {
             Page<GetAllEvenets> events = eventRepository.findByTipoAndFechaAfterOrEqual(Tipo.NO_OFICIAL, currentDate, pageable)
                     .map(evento -> {
                         String imageUrl = evento.getImagen_path(); // Get image URI
-                        return new GetAllEvenets(evento, imageUrl);
+                        Long asistentesCount = (long) evento.getAsistentes().size(); // Calculate number of attendees
+                        return new GetAllEvenets(evento, imageUrl, asistentesCount);
                     });
             return ResponseEntity.ok(events);
         } catch (EntityNotFoundException ex) {

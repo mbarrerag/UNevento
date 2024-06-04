@@ -30,18 +30,15 @@ public class GetEvents {
     @GetMapping
     public ResponseEntity<Page<GetAllEvenets>> getEvents(@PathVariable Facultades faculties, @PageableDefault Pageable pageable, HttpServletRequest request) {
         try {
-
             Page<GetAllEvenets> events = eventRepository.findByFacultadAndTipo(faculties, Tipo.OFICIAL, pageable)
                     .map(evento -> {
                         String imageUrl = evento.getImagen_path();
-                        System.out.println("Entresss");
-                        return new GetAllEvenets(evento, imageUrl);
+                        Long asistentesCount = (long) evento.getAsistentes().size(); // Calculate number of attendees
+                        return new GetAllEvenets(evento, imageUrl, asistentesCount);
                     });
             return ResponseEntity.ok(events);
-
         } catch (EntityNotFoundException ex) {
             return ResponseEntity.notFound().build();
         }
-
     }
 }

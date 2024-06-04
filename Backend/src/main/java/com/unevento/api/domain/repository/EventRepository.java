@@ -31,9 +31,8 @@ public interface EventRepository extends JpaRepository<Eventos, Long> {
     Page<Eventos> findByTipoAndFechaAfterOrEqual(Tipo tipo, Timestamp currentDate, Pageable pageable);
 
     //Consulta de Eventos a los cuales ha asistido un usuario con determinado id
-    @Query("SELECT new com.unevento.api.domain.records.GetAllEvenets(e, e.imagen_path) " +
+    @Query("SELECT new com.unevento.api.domain.records.GetAllEvenets(e, e.imagen_path, cast((select count(a) from Asistente a where a.evento = e) as long)) " +
             "FROM Eventos e INNER JOIN e.asistentes a " +
             "WHERE a.usuario.idUsuario = :usuarioId AND e.fecha_evento >= :currentDate " +
             "ORDER BY e.fecha_evento ASC")
-    Page<GetAllEvenets> findEventsByUsuarioIdAndFechaAfterOrEqual(@Param("usuarioId") Long usuarioId, @Param("currentDate") Timestamp currentDate, Pageable pageable);
-}
+    Page<GetAllEvenets> findEventsByUsuarioIdAndFechaAfterOrEqual(@Param("usuarioId") Long usuarioId, @Param("currentDate") Timestamp currentDate, Pageable pageable);}
