@@ -4,6 +4,7 @@ package com.unevento.api.controllers;
 import com.unevento.api.controllers.services.FileService;
 import com.unevento.api.domain.records.GetAllUsers;
 import com.unevento.api.domain.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -29,10 +30,16 @@ public class GetUsers {
 
     @GetMapping
     public ResponseEntity<Page<GetAllUsers>> getUsers(@PageableDefault(size = 2) Pageable pageable) {
-        Page<GetAllUsers> users = userRepository.findAll(pageable).map(user -> {
-            String imageUrl = user.getImagen_path(); // Get image URL
-            return new GetAllUsers(user, imageUrl);
-        });
-        return ResponseEntity.ok(users);
+        try {
+            Page<GetAllUsers> users = userRepository.findAll(pageable).map(user -> {
+                String imageUrl = user.getImagen_path(); // Get image URL
+                return new GetAllUsers(user, imageUrl);
+            });
+            return ResponseEntity.ok(users);
+        } catch (
+                EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 }

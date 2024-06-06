@@ -2,6 +2,7 @@ package com.unevento.api.controllers;
 
 import com.unevento.api.domain.records.ConfirmationEmail;
 import com.unevento.api.infra.email.MailerManager;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,15 +21,19 @@ public class EmailController {
 
     @PostMapping
     public ResponseEntity<String> sendCode(@RequestBody ConfirmationEmail confirmationEmail) {
-        System.out.println("Entre");
-        String email = confirmationEmail.email(); // Obtener la dirección de correo electrónico del objeto ConfirmationEmail
-        // Generar un código de 6 dígitos
-        String code = generateSixDigitCode();
-        // Enviar el código por correo electrónico
-        mailerManager.sendMessage(email, code);
+        try {
+            System.out.println("Entre");
+            String email = confirmationEmail.email(); // Obtener la dirección de correo electrónico del objeto ConfirmationEmail
+            // Generar un código de 6 dígitos
+            String code = generateSixDigitCode();
+            // Enviar el código por correo electrónico
+            mailerManager.sendMessage(email, code);
 
-        // Retornar el código generado
-        return ResponseEntity.ok(code);
+            // Retornar el código generado
+            return ResponseEntity.ok(code);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     private String generateSixDigitCode() {

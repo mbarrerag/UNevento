@@ -45,10 +45,11 @@ public class DeletedAssistance {
 
     @PostMapping
     public ResponseEntity<Void> deleteAssistance(@RequestBody com.unevento.api.domain.records.DeletedAssistance deletedAssistance) {
-        Usuario usuario = userRepository.findByIdUsuario(deletedAssistance.idusuario());
-        Eventos eventos = eventRepository.findByIdevento(deletedAssistance.eventoid());
+
 
         try {
+            Usuario usuario = userRepository.findByIdUsuario(deletedAssistance.idusuario());
+            Eventos eventos = eventRepository.findByIdevento(deletedAssistance.eventoid());
             Asistente asistente = asistentRepository.findByUsuarioAndEvento(usuario, eventos);
             if (asistente != null) {
                 asistentRepository.delete(asistente);

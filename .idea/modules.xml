@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/UNevento.iml" filepath="$PROJECT_DIR$/.idea/UNevento.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Backend/api.iml" filepath="$PROJECT_DIR$/Backend/api.iml" />
     </modules>
   </component>
 </project>

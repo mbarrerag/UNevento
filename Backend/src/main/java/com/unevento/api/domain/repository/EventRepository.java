@@ -25,6 +25,7 @@ public interface EventRepository extends JpaRepository<Eventos, Long> {
 
     Page<Eventos> findByUsuarioCreador(Usuario usuario, Pageable pageable);
 
+
     Page<Eventos> findByFacultadAndTipo(Facultades facultades, Tipo tipo, Pageable pageable);
 
     @Query("SELECT e FROM Eventos e WHERE e.tipo = :tipo AND e.fecha_evento >= :currentDate ORDER BY e.fecha_evento ASC")
@@ -35,4 +36,5 @@ public interface EventRepository extends JpaRepository<Eventos, Long> {
             "FROM Eventos e INNER JOIN e.asistentes a " +
             "WHERE a.usuario.idUsuario = :usuarioId AND e.fecha_evento >= :currentDate " +
             "ORDER BY e.fecha_evento ASC")
-    Page<GetAllEvenets> findEventsByUsuarioIdAndFechaAfterOrEqual(@Param("usuarioId") Long usuarioId, @Param("currentDate") Timestamp currentDate, Pageable pageable);}
+    Page<GetAllEvenets> findEventsByUsuarioIdAndFechaAfterOrEqual(@Param("usuarioId") Long usuarioId, @Param("currentDate") Timestamp currentDate, Pageable pageable);
+}

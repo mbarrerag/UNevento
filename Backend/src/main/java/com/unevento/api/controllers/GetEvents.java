@@ -13,6 +13,11 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/home/{faculties}")
@@ -30,9 +35,11 @@ public class GetEvents {
     @GetMapping
     public ResponseEntity<Page<GetAllEvenets>> getEvents(@PathVariable Facultades faculties, @PageableDefault Pageable pageable, HttpServletRequest request) {
         try {
-            Page<GetAllEvenets> events = eventRepository.findByFacultadAndTipo(faculties, Tipo.OFICIAL, pageable)
+            LocalDateTime startOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
+            Timestamp currentDate = Timestamp.valueOf(startOfDay);
+            Page<GetAllEvenets> events = eventRepository.findByTipoAndFechaAfterOrEqual(Tipo.OFICIAL, currentDate, pageable)
                     .map(evento -> {
-                        String imageUrl = evento.getImagen_path();
+                        String imageUrl = evento.getImagen_path(); // Get image URI
                         Long asistentesCount = (long) evento.getAsistentes().size(); // Calculate number of attendees
                         return new GetAllEvenets(evento, imageUrl, asistentesCount);
                     });
@@ -40,5 +47,6 @@ public class GetEvents {
         } catch (EntityNotFoundException ex) {
             return ResponseEntity.notFound().build();
         }
+
     }
 }

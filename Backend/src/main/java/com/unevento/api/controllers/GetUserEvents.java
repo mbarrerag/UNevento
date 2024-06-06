@@ -4,6 +4,7 @@ import com.unevento.api.domain.modelo.Usuario;
 import com.unevento.api.domain.records.GetAllUserEvents;
 import com.unevento.api.domain.repository.EventRepository;
 import com.unevento.api.domain.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -24,18 +25,25 @@ public class GetUserEvents {
 
 
     @GetMapping("/{id}")
-    public ResponseEntity<Page<GetAllUserEvents>> getUserEvents(@PageableDefault (size = 10) Pageable pageable, @PathVariable Long id) {
-        Usuario usuario = userRepository.getById(id);
-        Page<GetAllUserEvents> events = eventRepository.findByUsuarioCreador(usuario, pageable)
-                .map(evento -> {
+    public ResponseEntity<Page<GetAllUserEvents>> getUserEvents(@PageableDefault(size = 10) Pageable pageable, @PathVariable Long id) {
+        try {
 
-                    String imageUrl = evento.getImagen_path(); // Get image URI
-                    return new GetAllUserEvents(evento, imageUrl);
-                });
 
-        return ResponseEntity.ok(events);
+            Usuario usuario = userRepository.getById(id);
+            Page<GetAllUserEvents> events = eventRepository.findByUsuarioCreador(usuario, pageable)
+                    .map(evento -> {
+
+                        String imageUrl = evento.getImagen_path(); // Get image URI
+                        return new GetAllUserEvents(evento, imageUrl);
+                    });
+
+            return ResponseEntity.ok(events);
+        } catch (
+                EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
+
     }
-
 }
 
 

@@ -7,6 +7,7 @@ import com.unevento.api.domain.records.AnswerAssistEvent;
 import com.unevento.api.domain.repository.AsistentRepository;
 import com.unevento.api.domain.repository.EventRepository;
 import com.unevento.api.domain.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,9 +30,15 @@ public class ValidationAssistEvent {
 
     @PostMapping
     public ResponseEntity<com.unevento.api.domain.records.AnswerAssistEvent> ValidationAssistance(@RequestBody com.unevento.api.domain.records.ValidationAssistEvent validationAssistEvent) {
-        Usuario usuario = userRepository.getById(validationAssistEvent.idUsuario());
-        Eventos eventos = eventRepository.findByIdevento(validationAssistEvent.idEvento());
-        AnswerAssistEvent answer = asistentRepository.findByUsuarioAndEvento(usuario, eventos) != null ? new AnswerAssistEvent(true) : new AnswerAssistEvent(false);
-        return ResponseEntity.ok(answer);
+        try {
+
+
+            Usuario usuario = userRepository.getById(validationAssistEvent.idUsuario());
+            Eventos eventos = eventRepository.findByIdevento(validationAssistEvent.idEvento());
+            AnswerAssistEvent answer = asistentRepository.findByUsuarioAndEvento(usuario, eventos) != null ? new AnswerAssistEvent(true) : new AnswerAssistEvent(false);
+            return ResponseEntity.ok(answer);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
