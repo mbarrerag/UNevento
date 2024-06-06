@@ -37,7 +37,7 @@ public class GetEvents {
         try {
             LocalDateTime startOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
             Timestamp currentDate = Timestamp.valueOf(startOfDay);
-            Page<GetAllEvenets> events = eventRepository.findByTipoAndFechaAfterOrEqual(Tipo.OFICIAL, currentDate, pageable)
+            Page<GetAllEvenets> events = eventRepository.findByFacultadAndTipoAndFechaAfterOrEqual(faculties, Tipo.OFICIAL, currentDate, pageable)
                     .map(evento -> {
                         String imageUrl = evento.getImagen_path(); // Get image URI
                         Long asistentesCount = (long) evento.getAsistentes().size(); // Calculate number of attendees
