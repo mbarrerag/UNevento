@@ -52,6 +52,9 @@ public class Eventos {
     @JoinColumn(name = "id_usuario")
     private Usuario usuarioCreador;
 
+    @OneToMany(mappedBy = "idevento")
+    private List<Comentario> comentarios;
+
     @OneToMany(mappedBy = "evento")
     private List<Asistente> asistentes;
 

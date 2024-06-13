@@ -6,7 +6,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -47,6 +46,9 @@ public class Usuario implements UserDetails {
 
     @OneToMany(mappedBy = "usuarioCreador")
     private List<Eventos> eventos;
+
+    @OneToMany(mappedBy = "idusuario")
+    private List<Comentario> comentarios;
 
     @OneToMany(mappedBy = "usuario")
     private List<Asistente> asistentes;
@@ -110,4 +112,6 @@ public class Usuario implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 }

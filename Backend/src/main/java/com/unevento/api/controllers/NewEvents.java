@@ -29,7 +29,7 @@ public class NewEvents {
     private final FileService fileService;
     private final ContentFilterService contentFilterService;
 
-    @Autowired
+
     public NewEvents(EventRepository eventRepository, UserRepository userRepository, FileService fileService, ContentFilterService contentFilterService) {
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
