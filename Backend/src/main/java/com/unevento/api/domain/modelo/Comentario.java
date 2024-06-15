@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "comentario")
@@ -27,7 +28,7 @@ public class Comentario {
     @NotNull
     @ManyToOne
     @JoinColumn(name = "id_evento")
-    private Eventos idevento;
+    private Eventos ideventocomentarios;
 
     @NotNull
     private String comentario;
@@ -35,9 +36,14 @@ public class Comentario {
     @Column(name = "fecha")
     private Date fecha;
 
+    @OneToMany
+    @JoinColumn(name = "id_evento")
+    private List<Respuesta> respuestas;
+
+
     public Comentario(Usuario usuario, Eventos evento, AddComments addComments) {
         this.idusuario = usuario;
-        this.idevento = evento;
+        this.ideventocomentarios = evento;
         this.comentario = addComments.comentario();
         this.fecha = new Date(); // Inicializa la fecha aquí
     }
