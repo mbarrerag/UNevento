@@ -50,6 +50,9 @@ public class Usuario implements UserDetails {
     @OneToMany(mappedBy = "idusuario")
     private List<Comentario> comentarios;
 
+    @OneToMany(mappedBy = "usuariorespuesta")
+    private List<Respuesta> respuestas;
+
     @OneToMany(mappedBy = "usuario")
     private List<Asistente> asistentes;
     @Column(name = "imagen_path")

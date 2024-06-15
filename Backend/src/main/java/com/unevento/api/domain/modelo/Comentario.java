@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "comentario")
@@ -34,6 +35,10 @@ public class Comentario {
 
     @Column(name = "fecha")
     private Date fecha;
+
+    @OneToMany
+    @JoinColumn(name = "id_evento")
+    private List<Respuesta> respuestas;
 
     public Comentario(Usuario usuario, Eventos evento, AddComments addComments) {
         this.idusuario = usuario;
