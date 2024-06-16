@@ -6,7 +6,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
+
 public interface AnswerRepository extends JpaRepository<Respuesta, Long> {
 
-    Page<Respuesta> findByComentariorespuesta(Comentario comentario, Pageable pageable);
+    List<Respuesta> findByComentariorespuesta(Comentario comentario, Pageable pageable);
 }
