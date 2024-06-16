@@ -3,8 +3,10 @@ package com.unevento.api.controllers;
 
 import com.unevento.api.domain.modelo.Comentario;
 import com.unevento.api.domain.modelo.Eventos;
+import com.unevento.api.domain.modelo.Respuesta;
 import com.unevento.api.domain.modelo.Usuario;
-import com.unevento.api.domain.records.GetAllCommentsWithUser;
+import com.unevento.api.domain.records.GetAllCommentsWithUserAndResponses;
+import com.unevento.api.domain.repository.AnswerRepository;
 import com.unevento.api.domain.repository.CommentsRepository;
 import com.unevento.api.domain.repository.EventRepository;
 import com.unevento.api.domain.repository.UserRepository;
@@ -24,23 +26,26 @@ public class GetAllComments {
 
     private final UserRepository userRepository;
 
-    public GetAllComments(CommentsRepository commentsRepository, EventRepository eventRepository, UserRepository userRepository) {
+    private final AnswerRepository answerRepository;
+
+    public GetAllComments(CommentsRepository commentsRepository, EventRepository eventRepository, UserRepository userRepository, AnswerRepository answerRepository) {
         this.commentsRepository = commentsRepository;
         this.eventRepository = eventRepository;
         this.userRepository = userRepository;
+        this.answerRepository = answerRepository;
     }
 
 
-    //    private final AnswerRepository answerRepository;
-
     @GetMapping("/{id}")
-    public Page<GetAllCommentsWithUser> getComments(@PathVariable Long id, @PageableDefault(size = 1) Pageable pageable, HttpServletRequest request) {
+    public Page<GetAllCommentsWithUserAndResponses> getComments(@PathVariable Long id, @PageableDefault(size = 2) Pageable pageable, HttpServletRequest request) {
         Eventos eventos = eventRepository.findByIdevento(id);
         Page<Comentario> comentarios = commentsRepository.findByIdevento(eventos, pageable);
 
         return comentarios.map(comentario -> {
             Usuario usuario = userRepository.findByIdUsuario(comentario.getIdusuario().getIdUsuario()); // Suponiendo que tienes un repositorio de usuarios
-            return new GetAllCommentsWithUser(comentario, usuario);
+            Page<Respuesta> respuestas = answerRepository.findByComentariorespuesta(comentario, pageable);
+            return new GetAllCommentsWithUserAndResponses(comentario, usuario, respuestas.getContent());
+
         });
     }
 

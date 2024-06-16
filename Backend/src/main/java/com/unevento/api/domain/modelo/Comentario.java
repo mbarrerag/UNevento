@@ -31,6 +31,7 @@ public class Comentario {
     private Eventos idevento;
 
     @NotNull
+    @Column(name = "comentario")
     private String comentario;
 
     @Column(name = "fecha")
@@ -50,4 +51,5 @@ public class Comentario {
     public Comentario() {
         this.fecha = new Date(); // Inicializa la fecha aquí
     }
+
 }

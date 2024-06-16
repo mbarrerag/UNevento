@@ -30,7 +30,7 @@ public class Respuesta {
     @JoinColumn(name = "id_usuario")
     private Usuario usuariorespuesta;
 
-    @NotNull
+    @Column(name = "contenido")
     private String comentarioTexto;  // Renombrado para evitar confusión con la entidad Comentario
 
     @NotNull
@@ -38,6 +38,13 @@ public class Respuesta {
     private Date fecha;
 
     public Respuesta() {
+        this.fecha = new Date();  // Inicializa la fecha aquí
+    }
+
+    public Respuesta(Comentario comentario, Usuario user, String answer) {
+        this.comentariorespuesta = comentario;
+        this.usuariorespuesta = user;
+        this.comentarioTexto = answer;
         this.fecha = new Date();  // Inicializa la fecha aquí
     }
 }

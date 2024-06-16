@@ -10,4 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CommentsRepository extends JpaRepository<Comentario, Long> {
 
     Page<Comentario> findByIdevento(Eventos eventos, Pageable pageable);
+
+    Comentario findByIdcomentario(Long id);
 }
