@@ -130,6 +130,33 @@
                     </excludes>
                 </configuration>
             </plugin>
+<<<<<<< Updated upstream
+=======
+
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <from>
+                        <image>eclipse-temurin:17-jdk</image>
+                    </from>
+                    <to>
+                        <image>registry.hub.docker.com/breinerlopez10/boot-ssl</image>
+                        <auth>
+                            <username>breinerlopez10</username>
+                            <password>Oler2345678</password>
+                        </auth>
+                    </to>
+                    <container>
+                        <environment>
+                            <TZ>America/Bogota</TZ>
+                        </environment>
+                        <creationTime>USE_CURRENT_TIMESTAMP</creationTime>
+                    </container>
+                </configuration>
+            </plugin>
+>>>>>>> Stashed changes
         </plugins>
     </build>
 
