@@ -35,7 +35,7 @@ public class GetAllComments {
     }
 
     @GetMapping("/{id}")
-    public Page<GetAllCommentsWithUserAndResponses> getComments(@PathVariable Long id, @PageableDefault(size = 10) Pageable pageable, HttpServletRequest request) {
+    public Page<GetAllCommentsWithUserAndResponses> getComments(@PathVariable Long id, @PageableDefault(size = 15) Pageable pageable, HttpServletRequest request) {
 
         Eventos eventos = eventRepository.findByIdevento(id);
         Page<Comentario> comentarios = commentsRepository.findByIdevento(eventos, pageable);
