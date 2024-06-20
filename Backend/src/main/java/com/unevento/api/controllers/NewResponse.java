@@ -8,12 +8,10 @@ import com.unevento.api.domain.repository.AnswerRepository;
 import com.unevento.api.domain.repository.CommentsRepository;
 import com.unevento.api.domain.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/response")
 public class NewResponse {
 
