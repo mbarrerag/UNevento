@@ -38,7 +38,7 @@ public class NewResponse {
             }
             responseRepository.save(new Respuesta(comentario, user, newAnswer.answer()));
 
-            return ResponseEntity.ok("Response created");
+            return ResponseEntity.ok().build();
         } catch (Exception ex) {
             System.out.println(ex);
             return ResponseEntity.status(500).build();
